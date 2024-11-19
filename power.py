@@ -8,6 +8,7 @@ MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWr
 client = MongoClient(MONGO_URI)
 db = client["auth_demo"]  # 데이터베이스 이름 설정
 users_collection = db["users"]  # 유저 정보를 저장할 컬렉션
+posts_collection = db["posts"]  # 글 정보를 저장할 컬렉션
 
 # 비밀번호 해싱 함수
 def hash_password(password):
@@ -32,6 +33,16 @@ def register_user(username, password):
         "created_at": datetime.utcnow()
     })
 
+# 글 작성 함수
+def save_post(username, title, content):
+    post = {
+        "username": username,
+        "title": title,
+        "content": content,
+        "created_at": datetime.utcnow()
+    }
+    posts_collection.insert_one(post)
+
 # Streamlit 애플리케이션
 def main():
     if "logged_in" not in st.session_state:
@@ -40,8 +51,16 @@ def main():
 
     if st.session_state.logged_in:
         st.sidebar.success(f"안녕하세요, {st.session_state.username}님!")
-        st.sidebar.button("로그아웃", on_click=logout)
-        st.write("로그인 상태입니다. 이제 글을 작성하거나 다른 기능을 추가할 수 있습니다.")
+        if st.sidebar.button("로그아웃"):
+            logout()
+
+        st.title("Streamlit 글 작성 및 저장")
+        menu = st.radio("메뉴 선택", ["글 작성하기", "글 목록 보기"])
+
+        if menu == "글 작성하기":
+            write_post()
+        elif menu == "글 목록 보기":
+            view_posts()
     else:
         st.sidebar.title("인증")
         choice = st.sidebar.radio("메뉴", ["로그인", "회원가입"])
@@ -85,6 +104,29 @@ def register():
 def logout():
     st.session_state.logged_in = False
     st.session_state.username = ""
+
+# 글 작성 기능
+def write_post():
+    st.header("글 작성하기")
+    title = st.text_input("제목")
+    content = st.text_area("내용")
+    if st.button("저장하기"):
+        if title and content:
+            save_post(st.session_state.username, title, content)
+            st.success("글이 성공적으로 저장되었습니다!")
+        else:
+            st.error("제목과 내용을 모두 입력해주세요.")
+
+# 글 목록 보기 기능
+def view_posts():
+    st.header("저장된 글 목록")
+    posts = posts_collection.find()
+    for post in posts:
+        st.subheader(post["title"])
+        st.write(f"**작성자:** {post['username']}")
+        st.write(post["content"])
+        st.write(f"_작성일: {post['created_at']}_")
+        st.write("---")
 
 if __name__ == "__main__":
     main()
