@@ -12,9 +12,14 @@ st.title("에브리타임 데이터 크롤링(미완성)")
 
 # MongoDB에서 데이터 가져오기
 documents = collection.find()
+subjects = list(set(document.get('subject') for document in documents))
+selected_subject = st.selectbox("과목을 선택하세요", subjects)
 
-# 데이터 출력
-for document in documents:
+
+# 선택된 과목의 데이터 출력
+filtered_documents = list(collection.find({"subject": selected_subject}))
+
+for document in filtered_documents:
     reviews_object = document.get('reviews', {})
     st.write(f"과목명: {document.get('subject')}")
     st.write(f"과목 코드: {reviews_object.get('class_id')}")
