@@ -8,7 +8,7 @@ db = client["highschool_db"]
 collection = db["classes_info"]
 
 # Streamlit 앱 시작
-st.title("MongoDB 데이터를 Streamlit에서 출력하기")
+st.title("에브리타임 데이터 크롤링(미완성)")
 
 # MongoDB에서 데이터 가져오기
 documents = collection.find()
