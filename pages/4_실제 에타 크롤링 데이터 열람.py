@@ -10,26 +10,34 @@ collection = db["classes_info"]
 # Streamlit 앱 시작
 st.title("에브리타임 데이터 크롤링(미완성)")
 
-# MongoDB에서 데이터 가져오기
-documents = collection.find()
-subjects = list(set(document.get('subject') for document in documents))
+@st.cache_data
+def get_documents():
+    return list(collection.find())
+
+documents = get_documents()
+
+# 과목명 목록 생성
+subjects = list(set(document.get('subject_name') for document in documents))
 selected_subject = st.selectbox("과목을 선택하세요", subjects)
 
+# 선택된 과목의 세부 과목명 목록 생성
+if selected_subject:
+    filtered_documents = [document for document in documents if document.get('subject_name') == selected_subject]
+    classes = list(set(review.get('classes') for document in filtered_documents for review in document.get('reviews', []) if review.get('classes')))
+    selected_class = st.selectbox("세부 과목명을 선택하세요", classes)
 
-# 선택된 과목의 데이터 출력
-filtered_documents = list(collection.find({"subject": selected_subject}))
-
-for document in filtered_documents:
-    reviews_object = document.get('reviews', {})
-    st.write(f"과목명: {document.get('subject')}")
-    st.write(f"과목 코드: {reviews_object.get('class_id')}")
-    st.write(f"과목명(세부): {reviews_object.get('classes')}")
-    st.write(f"교수님: {reviews_object.get('professor')}")
-    st.write(f"평점: {document.get('ratings')}")
-    st.write("리뷰:")
-    for idx, review in enumerate(reviews_object.get('reviews', [])):
-        st.write(f"{idx + 1}. {review}")
-    st.write("---")
+    # 선택된 세부 과목명의 데이터 출력
+    if selected_class:
+        for document in filtered_documents:
+            reviews = document.get('reviews', [])
+            for idx, review_obj in enumerate(reviews):
+                if review_obj.get('classes') == selected_class:
+                    st.write(f"리뷰 {idx + 1}:")
+                    st.write(f"  과목 코드: {review_obj.get('class_id')}")
+                    st.write(f"  과목명(세부): {review_obj.get('classes')}")
+                    st.write(f"  교수님: {review_obj.get('professor')}")
+                    st.write(f"  리뷰 내용: {review_obj.get('reviews', [])}")
+                    st.write("---")
 
 # 필요한 경우 MongoDB 연결 닫기
 client.close()
