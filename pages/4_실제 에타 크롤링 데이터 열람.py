@@ -49,12 +49,20 @@ if selected_subject:
                     # classes_review DB에서 class_name으로 조인하여 리뷰 출력
                     class_name = class_obj.get('class_name')
                     if class_name:
+                        review_found = False
                         for class_review in class_reviews_documents:
                             reviews = class_review.get('reviews', [])
                             for review in reviews:
                                 if review.get('class_name') == class_name:
                                     st.write(f"리뷰 내용: {review.get('review_text')}")
                                     st.write("---")
+                                    review_found = True
+                                    break
+                            if review_found:
+                                break
+                        if not review_found:
+                            st.write("강의평이 없습니다. 소중한 강의평를 달아주세요!")
+                            st.write("---")
 
 # 필요한 경우 MongoDB 연결 닫기
 client.close()
