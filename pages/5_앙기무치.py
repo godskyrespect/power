@@ -1,14 +1,10 @@
 import streamlit as st
-import os
-import urllib.parse
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 
 
 # MongoDB 연결 준비
-username = urllib.parse.quote_plus(os.environ['MONGODB_USERNAME'])
-password = urllib.parse.quote_plus(os.environ['MONGODB_PASSWORD'])
 uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 db = client['recommendations_db']
