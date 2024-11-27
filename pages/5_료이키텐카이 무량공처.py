@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 
-st.set_page_config(page_title='🖕주언사가 되는 방법')
+st.set_page_config(page_title='료이키 텐카이')
 # MongoDB 연결 준비
 uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
