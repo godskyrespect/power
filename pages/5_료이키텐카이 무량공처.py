@@ -12,23 +12,6 @@ collection = db['recommendations']
 
 review_data = list[collection.find({})]
 
-# 사이드바를 통해 페이지 선택
-def main():
-    st.sidebar.title('Navigation')
-    page = st.sidebar.selectbox('Go to', ['메인 페이지', '우리 학교 수업'])
-
-    if page == '메인 페이지':
-        show_main_page()
-    elif page == '우리 학교 수업':
-        show_school_classes_page()
-
-# 메인 페이지 함수
-def show_main_page():
-    st.title('메인 페이지')
-    st.header('헤더')
-    st.write('여기는 메인 페이지의 샘플 콘텐츠입니다.')
-
-# 우리 학교 수업 페이지 함수
 def show_school_classes_page():
     st.title('우리 학교 수업')
     search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
@@ -47,7 +30,4 @@ def show_school_classes_page():
             st.subheader(f'🎓 {text}')
             #st.write(doc['recommend_reason'])            
 
-            
 
-if __name__ == "__main__":
-    main()
