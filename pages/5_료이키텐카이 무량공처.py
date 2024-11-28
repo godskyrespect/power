@@ -36,7 +36,7 @@ st.markdown("""
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
     print(query_en)
-    url = f"http://13.211.145.139:8000//recommend/{query_en}"
+    url = f"http://13.211.145.139:8000/recommend/{query_en}"
     response = requests.get(url)
 
     if response.status_code == 200:
