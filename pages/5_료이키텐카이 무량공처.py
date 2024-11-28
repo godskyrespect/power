@@ -13,7 +13,7 @@ collection = db['recommendations']
 documents = list(collection.find({}))
 st.markdown("""
     <style>
-    h2 {
+    h3 {
         color: teal;
         font-size: 36px;
     }
