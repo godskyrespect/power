@@ -10,8 +10,14 @@ client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 db = client['recommendations_db']
 collection = db['recommendations']
 
-review_data = list[collection.find({})]
+documents = list(collection.find({}))
 
+def show_recommendations(select):
+    st.header(f'"{select}"')    
+    text = select.replace("🎓", "")
+    recommendations = next((item["recommend_reason"] for item in documents if item["_id"] == text), None)
+    st.write(recommendations)
+           
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
 st.write('여기는 우리 학교 수업 페이지입니다.')
@@ -19,14 +25,15 @@ st.divider()
 
 st.header('울학교 선배님들의 추천 ✨')
 st.caption('GPT-4o 활용 추천',
-           help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
-documents = list(collection.find({}, {'_id': 1, 'recommend_text': 1, 'recommend_reason': 1}))
-cols = st.columns(2)
-for idx, doc in enumerate(documents):
-    col = cols[idx % 2]
-    with col.container(border=True):
-        text = doc['recommend_text']
-        st.subheader(f'🎓 {text}')
-        #st.write(doc['recommend_reason'])            
+    help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+
+rec = list(collection.find({}, {'_id' : 0, 'recommend_text': 1}))
+text = [item["recommend_text"] for item in rec]
+text = [f'🎓{txt}' for txt in text]
+selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
+
+if selection:
+with st.container(border=True):
+ show_recommendations(selection)          
 
 
