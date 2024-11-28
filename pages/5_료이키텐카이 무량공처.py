@@ -48,7 +48,7 @@ def get_recommendations(query_ko):
 
 
 def show_recommendations(select):
-    st.header(f'"{select}"')    
+    st.subheader(f'"{select}"')    
     text = select.replace("🎓", "")
     recs = get_recommendations(text)
     rec_reason = recs['recommend_reason']
