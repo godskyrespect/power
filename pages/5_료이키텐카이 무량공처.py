@@ -27,6 +27,7 @@ st.markdown("""
     h3 {
         color: teal;
         font-size: 36px;
+        text-align: center;
     }
     </style>
 """, unsafe_allow_html=True)
