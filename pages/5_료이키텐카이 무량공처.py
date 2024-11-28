@@ -64,6 +64,11 @@ def show_recommendations(select):
     recs = get_recommendations(text)
     rec_reason = recs['recommend_reason']
     st.write(rec_reason)
+    
+    st.divider()
+    
+    rec_subject = recs['recommendations']
+    st.write(rec_subject)
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
