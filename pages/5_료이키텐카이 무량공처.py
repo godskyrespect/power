@@ -11,9 +11,17 @@ db = client['recommendations_db']
 collection = db['recommendations']
 
 documents = list(collection.find({}))
+st.markdown("""
+    <style>
+    h2 {
+        color: teal;
+        font-size: 36px;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 def show_recommendations(select):
-    st.header(f'"{select}"')    
+    st.subheader(f'"{select}"')    
     text = select.replace("🎓", "")
     recommendations = next((item["recommend_reason"] for item in documents if item["_id"] == text), None)
     st.write(recommendations)
