@@ -33,7 +33,7 @@ text = [f'🎓{txt}' for txt in text]
 selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
 
 if selection:
-with st.container(border=True):
- show_recommendations(selection)          
+    with st.container(border=True):
+     show_recommendations(selection)          
 
 
