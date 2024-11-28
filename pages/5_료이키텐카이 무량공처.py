@@ -5,6 +5,16 @@ import certifi
 import requests
 
 st.set_page_config(page_title='료이키 텐카이', page_icon='♨️')
+
+MAPPING_EN2KO = {
+    "passion": "열정적인 교수님",
+    "benefit": "유익한 수업",
+    "helpful": "도움되는 수업",
+    "easy": "꿀강",
+    "gain": "얻어가는 수업"
+}
+MAPPING_KO2EN = {v: k for k, v in MAPPING_EN2KO.items()}
+
 # MongoDB 연결 준비
 uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
