@@ -16,12 +16,12 @@ MAPPING_EN2KO = {
 MAPPING_KO2EN = {v: k for k, v in MAPPING_EN2KO.items()}
 
 # MongoDB 연결 준비
-uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
-db = client['recommendations_db']
-collection = db['recommendations']
+#uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+#client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
+#db = client['recommendations_db']
+#collection = db['recommendations']
 
-documents = list(collection.find({}))
+#documents = list(collection.find({}))
 st.markdown("""
     <style>
     h3 {
@@ -47,7 +47,19 @@ def get_recommendations(query_ko):
 
     return data
 
+def get_documents():
+    url = "http://13.211.145.139:8000/recommend/recommends"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        print(data)
+    else:
+        print(f"Request failed with status code: {response.status_code}")
 
+    return data
+    
+    
 def show_recommendations(select):
     st.subheader(f'"{select}"')    
     text = select.replace("🎓", "")
@@ -62,15 +74,16 @@ st.divider()
 
 st.header('울학교 선배님들의 추천 ✨')
 st.caption('GPT-4o 활용 추천',
-    help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+           help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
 
-rec = list(collection.find({}, {'_id' : 0, 'recommend_text': 1}))
-text = [item["recommend_text"] for item in rec]
+
+documents = get_documents()
+text = [doc['recommend_text'] for doc in documents]
 text = [f'🎓{txt}' for txt in text]
 selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
 
 if selection:
     with st.container(border=True):
-     show_recommendations(selection)          
+        show_recommendations(selection)
 
 
