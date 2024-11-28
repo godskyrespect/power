@@ -2,6 +2,7 @@ import streamlit as st
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
+import requests
 
 st.set_page_config(page_title='료이키 텐카이', page_icon='♨️')
 # MongoDB 연결 준비
@@ -20,11 +21,28 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+##======================API REQUEST======================##
+def get_recommendations(query_ko):
+    query_en = MAPPING_KO2EN[query_ko]
+    print(query_en)
+    url = f"http://13.211.145.139:8000//recommend/{query_en}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()[0]
+        print(data)
+    else:
+        print(f"Request failed with status code: {response.status_code}")
+
+    return data
+
+
 def show_recommendations(select):
-    st.subheader(f'"{select}"')    
+    st.header(f'"{select}"')    
     text = select.replace("🎓", "")
-    recommendations = next((item["recommend_reason"] for item in documents if item["_id"] == text), None)
-    st.write(recommendations)
+    recs = get_recommendations(text)
+    rec_reason = recs['recommend_reason']
+    st.write(rec_reason)
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
