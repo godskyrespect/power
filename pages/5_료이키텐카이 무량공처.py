@@ -114,6 +114,7 @@ st.divider()
 st.header('울학교 선배님들의 추천 ✨')
 st.caption('GPT-4o 활용 추천',
            help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+st.write("글자글자 \n 글자글자")
 
 
 documents = get_documents()
