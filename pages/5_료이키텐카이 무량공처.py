@@ -71,7 +71,7 @@ def show_recommendations(select):
         subject = rec['subject']
         classes = rec['class']
         with st.container(border=True):
-            st.header(subject)
+            st.header(f'{subject} 교과 추천')
             for idx, cls in enumerate(classes):
                 st.write(f'{idx}. {cls}')
            
