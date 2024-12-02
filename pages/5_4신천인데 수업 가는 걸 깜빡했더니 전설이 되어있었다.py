@@ -115,6 +115,7 @@ tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
     st.title("🔍 찾고싶은 수업을 검색해보세요.")
     search_query = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
+    st.write("에휴 형신 이걸 검색해 보네 ㅋㅋㅋㅋ", search_query)
 
 with tab2:
     st.header('울학교 선배님들의 추천 ✨')
