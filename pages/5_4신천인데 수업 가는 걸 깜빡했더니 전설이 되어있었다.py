@@ -113,33 +113,8 @@ def show_recommendations(select):
 st.title('우리 학교 수업')                        
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
-
-
-    _LOREM_IPSUM = """
-    Lorem ipsum dolor sit amet, **consectetur adipiscing** elit, sed do eiusmod tempor
-    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    """
-    
-    
-    def stream_data():
-        for word in _LOREM_IPSUM.split(" "):
-            yield word + " "
-            time.sleep(0.02)
-    
-        yield pd.DataFrame(
-            np.random.randn(5, 10),
-            columns=["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
-        )
-    
-        for word in _LOREM_IPSUM.split(" "):
-            yield word + " "
-            time.sleep(0.02)
-    
-    
-    if st.button("Stream data"):
-        st.write_stream(stream_data)
-    search_query = st.text_input('찾고싶은 수업을 입력하세요.:', placeholder='수업명을 입력하세요')
+    st.title("🔍 찾고싶은 수업을 검색해보세요.")
+    search_query = st.text_input(placeholder='수업명을 입력하세요')
     st.write('여기는 우리 학교 수업 페이지입니다.')
 
 with tab2:
