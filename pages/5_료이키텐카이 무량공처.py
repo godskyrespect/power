@@ -101,8 +101,9 @@ def show_recommendations(select):
                     ratings = check_ratings(cls)
                     star = "⭐"
                     star_black = " ★ "
-                    lists = f" ∙  **{cls}** :gray[{prof}] \n {star*ratings}{star_black*(5-ratings)}"
-                    st.text(lists)
+                    lists = f''' ∙  **{cls}** :gray[{prof}] 
+                    {star*ratings}{star_black*(5-ratings)}'''
+                    st.write(lists)
 
 
                         
