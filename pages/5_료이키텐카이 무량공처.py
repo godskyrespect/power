@@ -100,12 +100,10 @@ def show_recommendations(select):
                     prof = find_professor(cls)
                     ratings = check_ratings(cls)
                     st.write(f' ⋅  **{cls}** :gray[{prof}]')
-                    for i in range(4):
-                        if ratings:
-                            st.write('⭐')
-                            ratings -= ratings
-                        else:
-                            st.write(' ★ ')
+                    star = "⭐"
+                    star_black = " ★ "
+                    st.write(f'{star*ratings}{star_black(5-ratings)}')
+
                         
            
 st.title('우리 학교 수업')
