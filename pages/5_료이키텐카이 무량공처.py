@@ -102,10 +102,10 @@ def show_recommendations(select):
                     st.write(f' ⋅  **{cls}** :gray[{prof}]')
                     for i in range(4):
                         if ratings:
-                            print('⭐')
+                            st.write('⭐')
                             ratings -= ratings
                         else:
-                            print(' ★ ')
+                            st.write(' ★ ')
                         
            
 st.title('우리 학교 수업')
