@@ -78,7 +78,7 @@ def show_recommendations(select):
             with st.container(border=True):
                 st.header(f'{subject} 교과 추천')
                 for idx, cls in enumerate(classes):
-                    st.write(f'{idx}. {cls}')
+                    st.write(f'⋅ **{cls}**')
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
