@@ -59,10 +59,11 @@ def get_documents():
     
     
 def show_recommendations(select):
-    st.subheader(f'"{select}"')    
     text = select.replace("🎓", "")
-    recs = get_recommendations(text)
-    rec_reason = recs['recommend_reason']
+    with st.spinner('잠시만 기다려주세요!'):
+        recs = get_recommendations(text)
+        rec_reason = recs['recommend_reason']
+    st.subheader(f'"{select}"') 
     st.write(rec_reason)
     
     st.divider()
