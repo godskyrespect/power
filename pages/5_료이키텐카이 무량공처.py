@@ -92,14 +92,21 @@ def show_recommendations(select):
         subject = rec['subject']
         if subject in options:
             continue
-        else:
+        else:⭐★
             classes = rec['class']
             with st.container(border=True):
                 st.header(f'{subject} 교과 추천')
                 for idx, cls in enumerate(classes):
                     prof = find_professor(cls)
                     ratings = check_ratings(cls)
-                    st.write(f' ⋅  **{cls}** :gray[{prof}] {ratings}')
+                    st.write(f' ⋅  **{cls}** :gray[{prof}]')
+                    for i in range(4):
+                        if ratings:
+                            print('⭐')
+                            ratings -= ratings
+                        else:
+                            print(' ★ ')
+                        
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
