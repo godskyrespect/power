@@ -92,7 +92,7 @@ def show_recommendations(select):
         subject = rec['subject']
         if subject in options:
             continue
-        else:⭐★
+        else:
             classes = rec['class']
             with st.container(border=True):
                 st.header(f'{subject} 교과 추천')
