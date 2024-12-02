@@ -126,5 +126,5 @@ selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
 if selection:
     with st.container(border=True):
         show_recommendations(selection)
-
-st.audio("bgm.mp3", format="audio/mpeg", loop=True)
+data = "./bgm.mp3
+st.audio(data, format="audio/mpeg", loop=True)
