@@ -29,6 +29,10 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+##========================API LOAD=======================##
+url_schoollist = "http://13.211.145.139:8000/school/info"
+response_sl = requests.get(url_schoollist)
+school_data = response_sl.json()
 
 ##======================API REQUEST======================##
 def get_recommendations(query_ko):
@@ -57,14 +61,7 @@ def get_documents():
     return data
 
 def find_professor(class_name):
-    url = "http://13.211.145.139:8000/school/info"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        print(data)
-    else:
-        print(f"Request failed with status code: {response.status_code}")
-
+    data = school_data
     for cls in data:
         if cls["class_name"] == class_name:
             return cls["professor"]
