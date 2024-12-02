@@ -56,6 +56,19 @@ def get_documents():
         print(f"Request failed with status code: {response.status_code}")
 
     return data
+
+def find_professor(class_name):
+    url = "http://13.211.145.139:8000/school/list"
+    response = requests.get(url)
+     if response.status_code == 200:
+        data = response.json()
+        print(data)
+    else:
+        print(f"Request failed with status code: {response.status_code}")
+
+    for cls in data["classes"]:
+        if cls["class_name"] == class_name:
+            return cls["professor"]
     
     
 def show_recommendations(select):
@@ -78,7 +91,8 @@ def show_recommendations(select):
             with st.container(border=True):
                 st.header(f'{subject} 교과 추천')
                 for idx, cls in enumerate(classes):
-                    st.write(f' ⋅  **{cls}**')
+                    prof = find_professor(cls)
+                    st.write(f' ⋅  **{cls}** {prof}')
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
