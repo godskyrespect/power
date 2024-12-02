@@ -67,6 +67,7 @@ def show_recommendations(select):
     
     st.divider()
 
+    options = st.multiselect("과목 표시 선택", recs['recommendations])
     for rec in recs['recommendations']:
         subject = rec['subject']
         classes = rec['class']
