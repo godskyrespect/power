@@ -127,4 +127,4 @@ if selection:
     with st.container(border=True):
         show_recommendations(selection)
 
-
+st.audio("bgm.mp3", format="audio/mpeg", loop=True)
