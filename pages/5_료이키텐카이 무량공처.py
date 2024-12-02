@@ -88,7 +88,7 @@ def show_recommendations(select):
                 st.header(f'{subject} 교과 추천')
                 for idx, cls in enumerate(classes):
                     prof = find_professor(cls)
-                    st.write(f' ⋅  **{cls}** {prof}')
+                    st.write(f' ⋅  **{cls}** :gray[{prof}]')
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
