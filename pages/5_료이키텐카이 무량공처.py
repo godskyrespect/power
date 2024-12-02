@@ -39,7 +39,6 @@ def get_recommendations(query_ko):
 
     if response.status_code == 200:
         data = response.json()[0]
-        print(data)
     else:
         print(f"Request failed with status code: {response.status_code}")
 
