@@ -99,10 +99,10 @@ def show_recommendations(select):
                 for idx, cls in enumerate(classes):
                     prof = find_professor(cls)
                     ratings = check_ratings(cls)
-                    st.write(f' ⋅  **{cls}** :gray[{prof}]')
                     star = "⭐"
                     star_black = " ★ "
-                    st.write(f'{star*ratings}{star_black*(5-ratings)}')
+                    st.write(f' ⋅  **{cls}** :gray[{prof}]  {star*ratings}{star_black*(5-ratings)}')
+
 
                         
            
