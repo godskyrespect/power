@@ -66,7 +66,7 @@ def find_professor(class_name):
     else:
         print(f"Request failed with status code: {response.status_code}")
 
-    for cls in data["classes"]:
+    for cls in data:
         if cls["class_name"] == class_name:
             return cls["professor"]
     
