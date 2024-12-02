@@ -34,6 +34,10 @@ url_schoollist = "http://13.211.145.139:8000/school/info"
 response_sl = requests.get(url_schoollist)
 school_data = response_sl.json()
 
+url_ratings = "http://13.211.145.139:8000/school/ratings"
+response_rt = requests.get(url_ratings)
+ratings = response_rt.json()
+
 ##======================API REQUEST======================##
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
@@ -65,6 +69,12 @@ def find_professor(class_name):
     for cls in data:
         if cls["class_name"] == class_name:
             return cls["professor"]
+
+def check_ratings(key):
+    data = ratings
+    for item in data:
+        if key in item:
+            return int(item[key])
     
     
 def show_recommendations(select):
@@ -88,7 +98,8 @@ def show_recommendations(select):
                 st.header(f'{subject} 교과 추천')
                 for idx, cls in enumerate(classes):
                     prof = find_professor(cls)
-                    st.write(f' ⋅  **{cls}** :gray[{prof}]')
+                    ratings = check_ratings(cls)
+                    st.write(f' ⋅  **{cls}** :gray[{prof}] {ratings}')
            
 st.title('우리 학교 수업')
 search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
