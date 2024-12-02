@@ -107,23 +107,24 @@ def show_recommendations(select):
 
 
                         
-           
-st.title('우리 학교 수업')
-search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
-st.write('여기는 우리 학교 수업 페이지입니다.')
-st.divider()
+tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
+with tab1:
+    st.title('우리 학교 수업')
+    search_query = st.text_input('검색할 내용을 입력하세요:', placeholder='수업명을 입력하세요')
+    st.write('여기는 우리 학교 수업 페이지입니다.')
 
-st.header('울학교 선배님들의 추천 ✨')
-st.caption('GPT-4o 활용 추천',
-           help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
-
-
-documents = get_documents()
-text = [doc['recommend_text'] for doc in documents]
-text = [f'🎓{txt}' for txt in text]
-selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
-
-if selection:
-    with st.container(border=True):
-        show_recommendations(selection)
+with tab2:
+    st.header('울학교 선배님들의 추천 ✨')
+    st.caption('GPT-4o 활용 추천',
+               help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+    
+    
+    documents = get_documents()
+    text = [doc['recommend_text'] for doc in documents]
+    text = [f'🎓{txt}' for txt in text]
+    selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
+    
+    if selection:
+        with st.container(border=True):
+            show_recommendations(selection)
 
