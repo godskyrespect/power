@@ -60,7 +60,7 @@ def get_documents():
 def find_professor(class_name):
     url = "http://13.211.145.139:8000/school/list"
     response = requests.get(url)
-     if response.status_code == 200:
+    if response.status_code == 200:
         data = response.json()
         print(data)
     else:
