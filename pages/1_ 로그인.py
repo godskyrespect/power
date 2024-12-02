@@ -11,8 +11,8 @@ if "username" not in st.session_state:
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
-db = client["auth_demo"]
-users_collection = db["users"]
+db = client["user_database"]
+users_collection = db["student"]
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
