@@ -102,7 +102,7 @@ def show_recommendations(select):
                     st.write(f' ⋅  **{cls}** :gray[{prof}]')
                     star = "⭐"
                     star_black = " ★ "
-                    st.write(f'{star*ratings}{star_black(5-ratings)}')
+                    st.write(f'{star*ratings}{star_black*(5-ratings)}')
 
                         
            
