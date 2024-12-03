@@ -118,6 +118,9 @@ if st.session_state.logged_in:
             st.session_state.student_id = ""
             st.session_state.name = ""
             st.success("로그아웃되었습니다.")
+
+    if not st.session_state.logged_in:
+    st.warning("로그인 해주세요.")
             
     st.title('우리 학교 수업')
     search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
