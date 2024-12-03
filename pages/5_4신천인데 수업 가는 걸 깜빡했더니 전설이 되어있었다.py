@@ -118,7 +118,7 @@ with tab1:
         st.write(search_query)
     else:
         st.title("🔍 찾고싶은 수업을 검색해보세요.")
-        search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
+        #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 
 with tab2:
     st.header('울학교 선배님들의 추천 ✨')
