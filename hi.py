@@ -32,7 +32,7 @@ st.markdown("""
     }
     </style>
     <a href="https://teachersite-3s3va6sj5zdegscdyqky3t.streamlit.app/" target="_blank">
-        <button class="fixed-button">네이버로 이동하기</button>
+        <button class="fixed-button">교사용 관리 페이지로 이동하기</button>
     </a>
     """, unsafe_allow_html=True)
 
