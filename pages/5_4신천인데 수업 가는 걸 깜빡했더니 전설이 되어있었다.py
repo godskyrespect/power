@@ -114,11 +114,12 @@ st.title('우리 학교 수업')
 search_query = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
+    st.title("🔍 찾고싶은 수업을 검색해보세요.")
     matches = [item for item in school_data if item.get("class_name") == search_query]
     if matches:
         st.write(matches)
     else:
-        st.title("🔍 찾고싶은 수업을 검색해보세요.")
+        st.error("검색된 강의가 없습니다",, icon="❕")
         #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 
 with tab2:
