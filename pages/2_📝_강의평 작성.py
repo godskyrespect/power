@@ -9,8 +9,12 @@ db = client["highschool_db"]
 collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
 
+st.set_page_config(
+    page_title="강의평 작성",
+    page_icon="📝"
+)
 # Streamlit 앱 시작
-st.title("강의평 작성")
+st.title("📝강의평 작성")
 
 # if "logged_in" not in st.session_state:
 #     st.session_state.logged_in = False
