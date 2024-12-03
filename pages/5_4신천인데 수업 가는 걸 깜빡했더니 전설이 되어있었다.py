@@ -111,15 +111,15 @@ def show_recommendations(select):
                     {star*ratings}{star_black*(5-ratings)}'''
                     st.write(lists)
 
-if st.session_state.logged_in:
-    with st.sidebar:
-        st.write(f" {st.session_state.student_id}")
-        st.write(f" {st.session_state.name}")
-        if st.button("로그아웃"):
-            st.session_state.logged_in = False
-            st.session_state.student_id = ""
-            st.session_state.name = ""
-            st.success("로그아웃되었습니다.")
+# if st.session_state.logged_in:
+#     with st.sidebar:
+#         st.write(f" {st.session_state.student_id}")
+#         st.write(f" {st.session_state.name}")
+#         if st.button("로그아웃"):
+#             st.session_state.logged_in = False
+#             st.session_state.student_id = ""
+#             st.session_state.name = ""
+#             st.success("로그아웃되었습니다.")
 
   
 
