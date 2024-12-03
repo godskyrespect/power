@@ -7,3 +7,11 @@ fastapi[standard]
 dnspython
 gradio
 python-dotenv
+langchain
+langchain-community
+langchain_openai
+pypdf
+rank_bm25
+sentence-transformers
+tokenizers
+sentencepiece
