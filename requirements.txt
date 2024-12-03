@@ -16,4 +16,3 @@ sentence-transformers
 tokenizers
 sentencepiece
 langchain-huggingface
-torch
