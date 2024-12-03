@@ -7,6 +7,7 @@ client = MongoClient(MONGO_URI)
 db = client["highschool_db"]
 collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
+collection_evaluations = db["classes_evaluations"]
 
 # Streamlit 앱 시작
 st.title("에브리타임 데이터 크롤링(미완성)")
