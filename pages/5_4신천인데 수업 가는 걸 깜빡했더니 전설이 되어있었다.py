@@ -113,8 +113,6 @@ def show_recommendations(select):
 
 
   
-st.write("CUDA available:", torch.cuda.is_available())
-st.write("GPU device count:", torch.cuda.device_count())
 st.title('우리 학교 수업')
 search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
