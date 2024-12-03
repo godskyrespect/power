@@ -113,7 +113,9 @@ def show_recommendations(select):
 
 
   
-st.title('우리 학교 수업')
+
+# st.title('우리 학교 수업')
+st.title("🕋ﷲ﷽")
 search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
