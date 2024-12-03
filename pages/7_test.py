@@ -1,3 +1,20 @@
+from langchain.vectorstores import FAISS
+from langchain.embeddings import HuggingFaceEmbeddings
+import streamlit as st
+
+# 임베딩 모델 설정
+embeddings = HuggingFaceEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
+
+# 텍스트 데이터
+texts = ["이것은 테스트 문장입니다.", "FAISS와 PyTorch 환경 테스트 중입니다."]
+
+# FAISS 생성
+faiss_vectorstore = FAISS.from_texts(texts, embedding=embeddings)
+st.write("FAISS 생성 완료!")
+
+
+
+
 # from langchain_community.retrievers import BM25Retriever
 # from langchain_huggingface import HuggingFaceEmbeddings
 # from langchain_community.vectorstores import FAISS
