@@ -26,6 +26,23 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+    body {
+        background-image: url('https://lh3.googleusercontent.com/p/AF1QipPNcGXtel6eVAQ-5Zi6bePQ5CdzCCHQ3UBuzONO=s1360-w1360-h1020');
+        background-size: cover; /* 이미지를 화면에 맞추기 */
+        background-position: center; /* 이미지 중앙에 위치 */
+        background-repeat: no-repeat; /* 이미지 반복 제거 */
+    }
+    .stApp {
+        background-image: url('https://lh3.googleusercontent.com/p/AF1QipPNcGXtel6eVAQ-5Zi6bePQ5CdzCCHQ3UBuzONO=s1360-w1360-h1020');
+        background-size: cover; /* 이미지를 화면에 맞추기 */
+        background-position: center; /* 이미지 중앙에 위치 */
+        background-repeat: no-repeat; /* 이미지 반복 제거 */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 # HTML과 CSS를 이용해 우측 하단에 스타일이 적용된 버튼 배치
 st.markdown("""
     <style>
