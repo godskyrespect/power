@@ -16,3 +16,4 @@ sentence-transformers
 tokenizers
 sentencepiece
 langchain-huggingface
+faiss-cpu
