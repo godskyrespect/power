@@ -59,3 +59,13 @@ if selected_subject:
                                 
 # 필요한 경우 MongoDB 연결 닫기
 client.close()
+
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f" {st.session_state.student_id}")
+        st.write(f" {st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
