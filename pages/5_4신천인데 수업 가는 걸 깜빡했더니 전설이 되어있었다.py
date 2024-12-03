@@ -119,7 +119,7 @@ with tab1:
     if matches:
         st.write(matches)
     else:
-        st.error("검색된 강의가 없습니다",, icon="❕")
+        st.error("검색된 강의가 없습니다", icon="❕")
         #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 
 with tab2:
