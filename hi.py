@@ -7,7 +7,24 @@ if "username" not in st.session_state:
     st.session_state.username = ""
 
 # 제목 설정
-st.markdown("# 🏫 온양고등학교 2025\n### 고교학점제 강의평가록")
+st.markdown("""
+    <style>
+    .title-container {
+        background-color: rgba(0, 0, 0, 0.6); /* 검은 배경 (투명도 60%) */
+        color: white; /* 흰 글씨 */
+        padding: 15px; /* 여백 추가 */
+        border-radius: 10px; /* 모서리 둥글게 */
+        text-align: center; /* 중앙 정렬 */
+        max-width: 600px; /* 컨테이너 최대 너비 설정 */
+        margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* 부드러운 그림자 효과 */
+    }
+    </style>
+    <div class="title-container">
+        <h1>🏫 온양고등학교 2025</h1>
+        <h3>고교학점제 강의평가록</h3>
+    </div>
+    """, unsafe_allow_html=True)
 
 # HTML과 CSS를 이용해 우측 하단에 스타일이 적용된 버튼 배치
 st.markdown("""
