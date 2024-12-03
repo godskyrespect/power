@@ -36,9 +36,8 @@ def register_user(username, password):
     })
 
 st.title("온양고등학교 2025 고교학점제 강의평가록")
-
-# 로그인 및 회원가입 탭 생성
 tabs = st.tabs(["로그인", "회원가입"])
+
 
 # 로그인 탭
 with tabs[0]:
