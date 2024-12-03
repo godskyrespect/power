@@ -113,10 +113,11 @@ def show_recommendations(select):
 st.title('우리 학교 수업')                        
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
-    st.title("🔍 찾고싶은 수업을 검색해보세요.")
-    search_query = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
-    if search_query:
-        st.write(":", "에휴 형신 이걸 검색해 보네 ㅋㅋㅋㅋ")
+    if search_query in school_data:
+        st.write(search_query)
+    else:
+        st.title("🔍 찾고싶은 수업을 검색해보세요.")
+        search_query = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 
 with tab2:
     st.header('울학교 선배님들의 추천 ✨')
