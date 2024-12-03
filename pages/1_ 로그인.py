@@ -27,7 +27,7 @@ def authenticate_user(username, password):
         return True
     return False
 
-def register_user(username, password):
+def register_user(username, password, name, student_id):
     users_collection.insert_one({
         "username": username,
         "password": hash_password(password),
@@ -70,6 +70,8 @@ with tabs[1]:
             st.error("모든 필드를 입력해주세요.")
         elif users_collection.find_one({"username": username}):
             st.error("이미 존재하는 아이디입니다.")
+        elif users_collection.find_one({"학번": student_id}):
+            st.error("이미 존재하는 학번입니다.")
         elif password != confirm_password:
             st.error("비밀번호가 일치하지 않습니다.")
         else:
