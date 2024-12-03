@@ -109,42 +109,43 @@ def show_recommendations(select):
                     {star*ratings}{star_black*(5-ratings)}'''
                     st.write(lists)
 
-
-st.title('우리 학교 수업')
-search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
-tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
-with tab1:
-    matches = [item for item in school_data if item.get("class_name") == search_query]
-    if matches:
-        st.write(matches)
-    else:
-        if search_query:
-            st.error("검색된 강의가 없습니다", icon="❕")
-            #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
-
-with tab2:
-    st.header('울학교 선배님들의 추천 ✨')
-    st.caption('GPT-4o 활용 추천',
-               help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f" {st.session_state.student_id}")
+        st.write(f" {st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
+            
+    st.title('우리 학교 수업')
+    search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
+    tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
+    with tab1:
+        matches = [item for item in school_data if item.get("class_name") == search_query]
+        if matches:
+            st.write(matches)
+        else:
+            if search_query:
+                st.error("검색된 강의가 없습니다", icon="❕")
+                #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
+    
+    with tab2:
+        st.header('울학교 선배님들의 추천 ✨')
+        st.caption('GPT-4o 활용 추천',
+                   help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
+        
+        
+        documents = get_documents()
+        text = [doc['recommend_text'] for doc in documents]
+        text = [f'🎓{txt}' for txt in text]
+        selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
+        
+        if selection:
+            with st.container(border=True):
+                show_recommendations(selection)
     
     
-    documents = get_documents()
-    text = [doc['recommend_text'] for doc in documents]
-    text = [f'🎓{txt}' for txt in text]
-    selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
     
-    if selection:
-        with st.container(border=True):
-            show_recommendations(selection)
-
-
-# if st.session_state.logged_in:
-#     with st.sidebar:
-#         st.write(f" {st.session_state.student_id}")
-#         st.write(f" {st.session_state.name}")
-#         if st.button("로그아웃"):
-#             st.session_state.logged_in = False
-#             st.session_state.student_id = ""
-#             st.session_state.name = ""
-#             st.success("로그아웃되었습니다.")
-
+    
