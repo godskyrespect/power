@@ -1,7 +1,7 @@
 import streamlit as st
 from pymongo import MongoClient
 import hashlib
-
+st.set_page_config(page_title="로그인", page_icon="🔒")
 # 세션 상태 초기화
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
