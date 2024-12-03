@@ -21,7 +21,7 @@ def get_class_reviews():
     return list(classes_review_collection.find())
 
 
-tabs1, tabs2 = st.title(["강의평", "강의평 작성"])
+tabs1, tabs2 = st.tabs(["강의평", "강의평 작성"])
 with tabs1:
     documents = get_documents()
     class_reviews_documents = get_class_reviews()
