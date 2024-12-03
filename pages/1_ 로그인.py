@@ -69,3 +69,13 @@ with tabs[1]:
         else:
             register_user(student_id, password, name)
             st.success("회원가입이 완료되었습니다! 로그인하세요.")
+            
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f" {st.session_state.student_id}")
+        st.write(f" {st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
