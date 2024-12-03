@@ -1,5 +1,5 @@
 from langchain_community.retrievers import BM25Retriever
-from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.retrievers import EnsembleRetriever
 import transformers
@@ -37,7 +37,7 @@ bm25_retriever = BM25Retriever.from_texts(
 )
 bm25_retriever.k = 1
 
-embedding = SentenceTransformerEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
+embedding = HuggingFaceEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
 faiss_vectorstore = FAISS.from_texts(
     doc_list, embedding, metadatas=[{"source": i} for i in range(len(data))]
 )
