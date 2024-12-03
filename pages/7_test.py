@@ -38,7 +38,7 @@ bm25_retriever = BM25Retriever.from_texts(
 bm25_retriever.k = 1
 
 embedding = HuggingFaceEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
-faiss_vectorstore = FAISS.from_texts(
+faiss_vectorstore = FAISS.from_textls(
     doc_list, embedding, metadatas=[{"source": i} for i in range(len(data))]
 )
 faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k":1})
