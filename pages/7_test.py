@@ -1,126 +1,75 @@
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
-import streamlit as st
+import streamlit as st 
+import random
+import time
+from openai import OpenAI
 
-# 임베딩 모델 설정
-embeddings = HuggingFaceEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
-
-# 텍스트 데이터
-texts = ["이것은 테스트 문장입니다.", "FAISS와 PyTorch 환경 테스트 중입니다."]
-
-# FAISS 생성
-faiss_vectorstore = FAISS.from_texts(texts, embedding=embeddings)
-st.write("FAISS 생성 완료!")
-
-
-
-
-# from langchain_community.retrievers import BM25Retriever
-# from langchain_huggingface import HuggingFaceEmbeddings
-# from langchain_community.vectorstores import FAISS
-# from langchain.retrievers import EnsembleRetriever
-# import transformers
-# import torch
-# import streamlit as st
-
-# data = [
-#     {
-#         "기업명": "삼성전자",
-#         "날짜": "2024-03-02",
-#         "문서 카테고리": "인수합병",
-#         "요약": "삼성전자가 HVAC(냉난방공조) 사업 인수를 타진 중이며, 이는 기존 가전 사업의 약점 보완을 목적으로 한다.",
-#         "주요 이벤트": ["기업 인수합병"]
-#     },
-#     {
-#         "기업명": "삼성전자",
-#         "날짜": "2024-03-24",
-#         "문서 카테고리": "인수합병",
-#         "요약": "테스트 하나 둘 셋",
-#         "주요 이벤트": ["신제품 출시"]
-#     },
-#     {
-#         "기업명": "현대차",
-#         "날짜": "2024-04-02",
-#         "문서 카테고리": "인수합병",
-#         "요약": "삼성전자가 HVAC(냉난방공조) 사업 인수를 타진 중이며, 이는 기존 가전 사업의 약점 보완을 목적으로 한다.",
-#         "주요 이벤트": ["기업 인수합병", "신제품 출시"]
-#     },
-# ]
-
-# doc_list = [item['요약'] for item in data]
-
-# bm25_retriever = BM25Retriever.from_texts(
-#     doc_list, metadatas=[{"source": i} for i in range(len(data))]
-# )
-# bm25_retriever.k = 1
-
-# embedding = HuggingFaceEmbeddings(model_name="distiluse-base-multilingual-cased-v1")
-# faiss_vectorstore = FAISS.from_texts(
-#     doc_list, embedding, metadatas=[{"source": i} for i in range(len(data))]
-# )
-# faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k":1})
-
-# ensemble_retriever = EnsembleRetriever(
-#     retrievers=[bm25_retriever, faiss_retriever], weights=[0.5, 0.5]
-# )
-
-# model_id = "42dot/42dot_LLM-SFT-1.3B"
-
-# pipeline = transformers.pipeline(
-#     "text-generation",
-#     model=model_id,
-#     model_kwargs={"torch_dtype": torch.float16}
-# )
-
-# pipeline.model.eval()
-
-# def search(query):
-#     ensemble_docs = ensemble_retriever.invoke(query)
-#     return ensemble_docs
-
-# def sllm_generate(query):
-
-#     answer = pipeline(
-#         query,
-#         max_new_tokens=50,
-#         do_sample=True,
-#         temperature=0.3,
-#         top_p=0.9,
-#         repetition_penalty=1.2,
-#     )
-#     return answer[0]['generated_text'][len(query):]
-
-# def prompt_and_generate(query):
-#     docs = [doc for doc in search(query)]
-#     prompt = f"""아래 질문을 기반으로 검색된 뉴스를 참고하여 질문에 대한 답변을 생성하시오.
-
-# 질문: {query}
-# """
+# # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
+# with st.chat_message("user"):
+#     st.write("안녕하세여~")
     
-#     for i in range(len(docs)):
-#         prompt += f"뉴스{i+1}\n"
-#         prompt += f"요약: {docs[i].page_content}\n"
-#         prompt += "\n"
-#     prompt += "답변: "
+# with st.chat_message("assistant"):
+#     st.write("인간시대의 끝이 도래했다")
     
-#     answer = sllm_generate(prompt)
-#     return answer
+# # 채팅 입력기 만들기
+# prompt = st.chat_input("아무거나 물어보세요.")
+# if prompt:
+#     with st.chat_message("user"):
+#         st.write(f'{prompt}')
 
-# st.title("🤖 투자 어시스턴트")
-
+# def response_generator():
+#     response = "hello my name is chatgpt clone"
+#     for word in response.split():
+#         yield word + " "
+#         time.sleep(0.05)
+        
+    
+# # 채팅 히스토리 초기화하기
 # if "messages" not in st.session_state:
 #     st.session_state.messages = []
 
 # for message in st.session_state.messages:
 #     with st.chat_message(message['role']):
 #         st.markdown(message['content'])
-
-# if prompt := st.chat_input("궁금한 점을 물어보세요."):
-#     st.chat_message("user").markdown(prompt)
+        
+# # := 할당하고 값을 반환함., 사용자가 입력하고 화면에 기억하는 코드
+# if prompt := st.chat_input("무엇을 도와드릴까요?"):
+#     with st.chat_message('user'):
+#         st.markdown(prompt)
 #     st.session_state.messages.append({"role": "user", "content": prompt})
+    
+# #chatgpt를 통해서 나온 대답을 받습니다.
+# response = f"Echo: {prompt}"
 
-#     response = f"bot: {prompt_and_generate(prompt.strip())}"
+# # 챗봇 답변을 작성해 줍니다. 
+# with st.chat_message("assistant"):
+#     response = st.write_stream(response_generator())
+# st.session_state.messages.append({"role": "assistant", "content": response})
+key = st.text_input()
+st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
+api_key = key
 
-#     with st.chat_message("assistant"):
-#         st.markdown(response)
-#     st.session_state.messages.append({"role": "assistant", "content": response})
+client = OpenAI(api_key=api_key)
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-4o-mini"
+    
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+        
+if prompt := st.chat_input('무엇을 도와드릴까요?'):
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    
+    with st.chat_message('assistant'):
+        stream = client.chat.completions.create(
+            model = st.session_state["openai_model"],
+            messages = [{"role": m['role'], "content": m['content']} for m in st.session_state.messages],
+            stream=True
+        )
+        response = st.write_stream(stream)
+    st.session_state.messages.append({"role": "assistant", "content": response})
