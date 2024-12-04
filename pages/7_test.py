@@ -44,7 +44,7 @@ from openai import OpenAI
 # with st.chat_message("assistant"):
 #     response = st.write_stream(response_generator())
 # st.session_state.messages.append({"role": "assistant", "content": response})
-key = st.text_input("Movie title", "Life of Brian")
+key = st.text_input("API키 입력하세요", "Life of Brian")
 st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
 api_key = key
 
