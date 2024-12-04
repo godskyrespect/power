@@ -67,7 +67,7 @@ st.markdown("""
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 증가 */
     }
     </style>
-    <a href="https://teachersite-3s3va6sj5zdegscdyqky3t.streamlit.app/" target="_blank">
+    <a href="https://teachrevolution.streamlit.app/" target="_blank">
         <button class="fixed-button">교사용 관리 페이지로 이동하기</button>
     </a>
     """, unsafe_allow_html=True)
