@@ -74,6 +74,8 @@ st.markdown("""
 
 
 if st.session_state.logged_in:
-    st.sidebar.success(f"안녕하세요, {st.session_state.username}님!")
+    st.sidebar.success(f"안녕하세요, {st.session_state.name}님!")
 else:
     st.sidebar.info("로그인이 필요합니다.")
+
+
