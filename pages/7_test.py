@@ -48,7 +48,10 @@ import time
 # with st.chat_message("assistant"):
 #     response = st.write_stream(response_generator())
 # st.session_state.messages.append({"role": "assistant", "content": response})
-client = OpenAI(api_key=api_key)
+key = st.text_input("API키 입력하세요", "후광후광후")
+st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
+api_key = key
+
 with open(file, 'r', encoding='utf-8') as file:
     data = json.load(file)  # JSON 데이터를 Python 객체로 변환
 
@@ -109,11 +112,6 @@ def prompt_generator(query, docs):
         
     answer = chatgpt_generate(prompt)
     return answer
-
-
-key = st.text_input("API키 입력하세요", "후광후광후")
-st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
-api_key = key
 
 
 
