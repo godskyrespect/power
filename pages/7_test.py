@@ -7,7 +7,7 @@ import streamlit as st
 import random
 import time
 
-file_path = 'text.json'
+file_path = '.\text.json'
 
 
 with open(file_path, 'r', encoding='utf-8') as file:
