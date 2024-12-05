@@ -7,6 +7,7 @@ import streamlit as st
 import random
 import time
 
+file = './text.json'
 # # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
 # with st.chat_message("user"):
 #     st.write("안녕하세여~")
