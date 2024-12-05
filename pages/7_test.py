@@ -116,7 +116,7 @@ api_key = key
 client = OpenAI(api_key=api_key)
 if st.button("새로고침"):
     st.rerun()
-tab1 = st.tabs([tab1])
+tab1 = st.tabs(["강신천 교수님 때문에 어느샌가 인간적으로 타락한 사연"])
 with tab1:
     st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
     
