@@ -117,7 +117,7 @@ client = OpenAI(api_key=api_key)
 if st.button("새로고침"):
     st.rerun()
     
-col1, col2 = st.col([1, 9])
+col1, col2 = st.columns([1, 9])
 with col1:
     if st.button("방귀"):
         st.rerun()
