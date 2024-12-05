@@ -129,15 +129,15 @@ with st.container():
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
             
-    if prompt := st.chat_input('무엇을 도와드릴까요?'):
-        with st.chat_message('user'):
-            st.markdown(prompt)
-        st.session_state.messages.append({"role": "user", "content": prompt})
-    
-        retrived = [doc for doc in search(prompt)]
-        with st.chat_message('assistant'):
-            answer = prompt_generator(prompt, retrived)
-            response = st.write_stream(answer)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+if prompt := st.chat_input('무엇을 도와드릴까요?'):
+    with st.chat_message('user'):
+        st.markdown(prompt)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+
+    retrived = [doc for doc in search(prompt)]
+    with st.chat_message('assistant'):
+        answer = prompt_generator(prompt, retrived)
+        response = st.write_stream(answer)
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
