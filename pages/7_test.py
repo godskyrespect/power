@@ -59,7 +59,8 @@ def slang_detector(query):
     ]
     response = client.chat.completions.create(model=st.session_state["openai_model"], messages=messages)
     answer = response.choices[0].message.content
-    return int(answer)
+    if answer == '1':
+        return 1
 
 def prompt_generator(query, docs):
     prompt = f"""
