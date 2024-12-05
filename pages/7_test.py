@@ -151,8 +151,8 @@ if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
-    if slang_detector(prompt):
-        st.toast('적절하지 못한 표현을 사용시 이용이 정지됩니다.', icon='🚨')
+    if slang_detector(prompt) == 1:
+        st.toast('적절하지 못한 표현은 자제하세요.', icon='🚨')
         
     retrived = [doc for doc in search(prompt)]
     with st.chat_message('assistant'):
