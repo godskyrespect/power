@@ -58,7 +58,7 @@ with open(file_path, 'r', encoding='utf-8') as file:
 key = st.text_input("API키 입력하세요", "후광후광후")
 st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
 api_key = key
-
+client = OpenAI(api_key=api_key)
 # 불러온 데이터 확인
 #print(data)
 
