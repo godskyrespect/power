@@ -118,12 +118,8 @@ client = OpenAI(api_key=api_key)
 st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
 st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
 
-col1, col2 = st.columns([1, 9])
+col1, col2 = st.columns([9, 1])
 with col1:
-    if st.button("방귀"):
-        st.rerun()
-        
-with col2:
     if "openai_model" not in st.session_state:
         st.session_state["openai_model"] = "gpt-4o-mini"
         
@@ -132,7 +128,10 @@ with col2:
         
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            st.markdown(message["content"])   
+with col2:
+    if st.button("방귀"):
+        st.session_state.messages.clear()
 
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
