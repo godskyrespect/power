@@ -116,16 +116,10 @@ api_key = key
 client = OpenAI(api_key=api_key)
 if st.button("새로고침"):
     st.rerun()
-tab1 = st.tabs(["강신천 교수님 때문에 어느샌가 인간적으로 타락한 사연"])
+    
+tab1, tab2 = st.tabs(["강신천 교수님 때문에 어느샌가 인간적으로 타락한 사연", "탭2"])
 with tab1:
     st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
-    
-    # 불러온 데이터 확인
-    #print(data)
-    
-    
-    
-    
     with st.container():
         if "openai_model" not in st.session_state:
             st.session_state["openai_model"] = "gpt-4o-mini"
