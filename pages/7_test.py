@@ -7,7 +7,7 @@ import streamlit as st
 import random
 import time
 
-file = 'text.json'
+file_path = 'text.json'
 # # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
 # with st.chat_message("user"):
 #     st.write("안녕하세여~")
@@ -53,7 +53,7 @@ key = st.text_input("API키 입력하세요", "후광후광후")
 st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
 api_key = key
 
-with open(file, 'r', encoding='utf-8') as file:
+with open(file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)  # JSON 데이터를 Python 객체로 변환
 
 # 불러온 데이터 확인
