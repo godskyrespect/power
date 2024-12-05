@@ -105,7 +105,7 @@ def prompt_generator(query, docs):
 
     답변할 때 주의사항은 다음과 같습니다. 
     1. 자신의 진로를 추천해주는 질문이 아닐 때는 해당 질문에는 답변하기 어렵다고 친절하게 답변하세요.
-    2. 비방하는 말이나 욕설, 성적인 대답이 들어오는 경우에는 잘못된 행동을 하면 안된다고 알려주고 답변하기 어렵다고 친철하게 알려주세요.
+    2. 비방하는 말이나 욕설, 성적인 대답이 포함되어 있는 경우 해당 발언은 하면 안된다고 답변할 수 없다고 이야기 하세요.
     
     아래에 있는 문서 내용을 바탕으로 학과에 대해서 고등학생에게 소개하는 방식으로 설명해 주세요.
     """
@@ -134,6 +134,7 @@ with st.container():
             st.markdown(message["content"])
             
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
+    st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -144,4 +145,4 @@ if prompt := st.chat_input('무엇을 도와드릴까요?'):
         response = st.write_stream(answer)
     st.session_state.messages.append({"role": "assistant", "content": response})
 
-st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
+
