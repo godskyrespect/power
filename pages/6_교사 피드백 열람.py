@@ -18,16 +18,27 @@ student_collection = user_db["student"]
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
-if "학번" not in st.session_state:
+if "student_id" not in st.session_state:
     st.session_state.student_id = ""
-if "이름" not in st.session_state:
+if "name" not in st.session_state:
     st.session_state.name = ""
+
+# 로그인 상태 확인 후 사이드바에 사용자 정보 표시
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f"{st.session_state.student_id}")
+        st.write(f"{st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
 if not st.session_state.logged_in:
     st.warning("로그인 해주세요.")
 else:
     def main():
         st.title("📚 수강 과목 선택 페이지")
-        student_id = st.text_input("🔍 학번을 입력하세요:", value=st.session_state.student_id, key="student_id")
+        student_id = st.session_state.student_id
 
         if student_id:
             # 학생 학번으로 학생 이름 조회
@@ -66,13 +77,3 @@ else:
 
     if __name__ == "__main__":
         main()
-        
-if st.session_state.logged_in:
-    with st.sidebar:
-        st.write(f"학번: {st.session_state.student_id}")
-        st.write(f"이름: {st.session_state.name}")
-        if st.button("로그아웃"):
-            st.session_state.logged_in = False
-            st.session_state.student_id = ""
-            st.session_state.name = ""
-            st.success("로그아웃되었습니다.")
