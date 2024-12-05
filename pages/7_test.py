@@ -117,8 +117,12 @@ client = OpenAI(api_key=api_key)
 if st.button("새로고침"):
     st.rerun()
     
-tab1, tab2 = st.tabs(["강신천 교수님 때문에 어느샌가 인간적으로 타락한 사연", "탭2"])
-with tab1:
+col1, col2 = st.col([1, 9])
+with col1:
+    if st.button("방귀"):
+        st.rerun()
+        
+with col2:
     st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
     with st.container():
         if "openai_model" not in st.session_state:
