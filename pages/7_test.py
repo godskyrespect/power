@@ -47,7 +47,19 @@ def chatgpt_generate(query):
     }]
     response = client.chat.completions.create(model=st.session_state["openai_model"], messages=messages, stream=True)
     return response
-
+    
+def slang_detector(query):
+    messages = [{
+        "role": "system",
+        "content": "당신은 사용자가 욕설, 성적인 표현, 인종차별발언, 등 적절하지 않은 표현이 있는지 확인해야 합니다. 만약 해당 표현이 있다면 1이라고 대답하세요."
+    },{
+        "role": "user",
+        "content": query
+    }
+    ]
+    response = client.chat.completions.create(model=model, messages=messages)
+    answer = response.choices[0].message.content
+    return int(answer)
 
 def prompt_generator(query, docs):
     prompt = f"""
@@ -139,7 +151,9 @@ if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
-
+    if slang_detector(prompt):
+        st.toast('적절하지 못한 표현을 사용시 이용이 정지됩니다.', icon='🚨')
+        
     retrived = [doc for doc in search(prompt)]
     with st.chat_message('assistant'):
         answer = prompt_generator(prompt, retrived)
