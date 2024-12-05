@@ -16,15 +16,15 @@ st.set_page_config(
 # Streamlit 앱 시작
 st.title("📝강의평 작성")
 
-# if "logged_in" not in st.session_state:
-#     st.session_state.logged_in = False
-# if "학번" not in st.session_state:
-#     st.session_state.student_id = ""
-# if "이름" not in st.session_state:
-#     st.session_state.name = ""
+ if "logged_in" not in st.session_state:
+     st.session_state.logged_in = False
+ if "학번" not in st.session_state:
+     st.session_state.student_id = ""
+ if "이름" not in st.session_state:
+     st.session_state.name = ""
 
-# if not st.session_state.logged_in:
-#     st.warning("로그인 해주세요.")
+ if not st.session_state.logged_in:
+     st.warning("로그인 해주세요.")
 
 # 탭 설정
 tabs = st.tabs(["강의평 작성", "강의평 열람"])
