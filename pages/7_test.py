@@ -9,7 +9,7 @@ import time
 import config
 
 
-client = OpenAI(api_key=config.OPENAI_API_KEY)
+client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
 file_path = './text.json'
 with open(file_path, 'r', encoding='utf-8') as file:
@@ -24,7 +24,7 @@ def search(query):
     # bm25_retriever.k = 3
 
 
-    embedding = OpenAIEmbeddings(api_key=config.OPENAI_API_KEY)
+    embedding = OpenAIEmbeddings(api_key=st.secrets.OPENAI_API_KEY)
     faiss_vectorstore = FAISS.from_texts(
         doc_list, embedding, metadatas=[{"source": i} for i in range(len(doc_list))]
     )
