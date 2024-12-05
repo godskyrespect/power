@@ -132,9 +132,9 @@ with st.container():
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
-            
+st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
+
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
-    st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
