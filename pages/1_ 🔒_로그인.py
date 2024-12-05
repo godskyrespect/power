@@ -7,9 +7,9 @@ st.set_page_config(page_title="로그인", page_icon="🔒")
 # 세션 상태 초기화
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
-if "학번" not in st.session_state:
+if "student_id" not in st.session_state:
     st.session_state.student_id = ""
-if "이름" not in st.session_state:
+if "name" not in st.session_state:
     st.session_state.name = ""
 
 # MongoDB 연결 설정
