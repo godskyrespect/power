@@ -113,3 +113,15 @@ else:
                     st.write("---")
             else:
                 st.write("리뷰가 없습니다. 소중한 리뷰를 달아주세요!")
+
+
+
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f"학번: {st.session_state.student_id}")
+        st.write(f"이름: {st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
