@@ -57,7 +57,7 @@ def slang_detector(query):
         "content": query
     }
     ]
-    response = client.chat.completions.create(model=model, messages=messages)
+    response = client.chat.completions.create(model=st.session_state["openai_model"], messages=messages)
     answer = response.choices[0].message.content
     return int(answer)
 
