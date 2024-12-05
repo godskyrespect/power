@@ -1,121 +1,29 @@
 import streamlit as st
 from pymongo import MongoClient
-import json
+import pandas as pd
 
-st.set_page_config(
-    page_title="📘 강의평 작성",
-    page_icon="✏️"
-)
-
-st.title("📘 강의평 작성")
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
+data = client["teacher_page"]
+evaluation_collection = data["evaluation"]
+
 db = client["highschool_db"]
 collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
+teacher_collection = db["teacher_page"]
 
-# Streamlit 앱 시작
-st.title("강의평 작성")
+user_db = client["user_database"]
+student_collection = user_db["student"]
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
-if "학번" not in st.session_state:
+if "student_id" not in st.session_state:
     st.session_state.student_id = ""
-if "이름" not in st.session_state:
+if "name" not in st.session_state:
     st.session_state.name = ""
-if not st.session_state.logged_in:
-    st.warning("로그인 해주세요.")
-else:
-    # 탭 설정
-    tabs = st.tabs(["강의평 작성", "강의평 열람"])
 
-    # 강의평 작성 탭
-    with tabs[0]:
-        # 사용자로부터 classes_evaluations 입력 받기
-        subject_names = list(collection.distinct("subject_name"))
-        subject_name = st.selectbox("과목명", subject_names)
-
-        # 선택된 과목에 해당하는 세부 과목명 목록 가져오기
-        class_name = None
-        professor = None
-        if subject_name:
-            filtered_documents = list(collection.find({"subject_name": subject_name}))
-            class_names = list(set(class_obj["class_name"] for doc in filtered_documents for class_obj in doc.get("classes", [])))
-            if class_names:
-                class_name = st.selectbox("세부 과목명", class_names, key="class_select")
-
-            # 선택된 세부 과목명에 해당하는 교수명 가져오기
-            if class_name:
-                filtered_documents = list(collection.find({"subject_name": subject_name}))
-                professors = list(set(
-                    class_obj["professor"]
-                    for doc in filtered_documents
-                    for class_obj in doc.get("classes", [])
-                    if class_obj["class_name"] == class_name
-                ))
-                if professors:
-                    professor = st.selectbox("교수님", professors, key="professor_select")
-
-        ratings = st.slider("평점", 1.0, 5.0, 3.0, 0.5)
-        review_text = st.text_area("리뷰 내용")
-        submit_button = st.button("저장하기")
-
-        # 입력된 classes_evaluations 데이터 처리
-        if submit_button and subject_name and class_name and professor:
-            evaluation_data = {
-                "subject_name": subject_name,
-                "class_name": class_name,
-                "professor": professor,
-                "ratings": ratings,
-                "review_text": review_text
-            }
-            collection.insert_one(evaluation_data)
-            st.success("classes_evaluations 데이터가 성공적으로 저장되었습니다.")
-
-    # 강의평 열람 탭
-    with tabs[1]:
-        st.header("강의평 열람")
-
-        # 사용자로부터 subject_name 선택
-        subject_names = list(classes_review_collection.distinct("subject_name"))
-        subject_name = st.selectbox("과목명", subject_names, key="subject_select_read")
-
-        # 선택된 과목에 해당하는 세부 과목명 목록 가져오기
-        class_name = None
-        professor = None
-        if subject_name:
-            filtered_documents = list(classes_review_collection.find({"subject_name": subject_name}))
-            reviews = [review for doc in filtered_documents for review in doc.get("reviews", [])]
-            class_names = list(set(review.get("class_name") for review in reviews if "class_name" in review))
-            if class_names:
-                class_name = st.selectbox("세부 과목명", class_names, key="class_select_read")
-
-            # 선택된 세부 과목명에 해당하는 교수명 가져오기
-            if class_name:
-                filtered_documents = list(collection.find({"subject_name": subject_name}))
-                professors = list(set(
-                    class_obj["professor"]
-                    for doc in filtered_documents
-                    for class_obj in doc.get("classes", [])
-                    if class_obj["class_name"] == class_name
-                ))
-                if professors:
-                    professor = st.selectbox("교수님", professors, key="professor_select_read")
-
-        # 선택된 세부 과목명에 해당하는 리뷰와 평점 출력
-        if class_name:
-            filtered_reviews = [review for review in reviews if review.get("class_name") == class_name]
-            if len(filtered_reviews) > 0:
-                for review in filtered_reviews:
-                    st.write(f"리뷰 내용: {review.get('review_text')}")
-                    st.write(f"평점: {review.get('ratings')}")
-                    st.write("---")
-            else:
-                st.write("리뷰가 없습니다. 소중한 리뷰를 달아주세요!")
-
-
-
+# 로그인 상태 확인 후 사이드바에 사용자 정보 표시
 if st.session_state.logged_in:
     with st.sidebar:
         st.write(f"학번: {st.session_state.student_id}")
@@ -125,3 +33,45 @@ if st.session_state.logged_in:
             st.session_state.student_id = ""
             st.session_state.name = ""
             st.success("로그아웃되었습니다.")
+else:
+    def main():
+        st.title("📚 수강 과목 선택 페이지")
+        student_id = st.session_state.student_id
+
+        if student_id:
+            # 학생 학번으로 학생 이름 조회
+            student = student_collection.find_one({"학번": student_id})
+            if student:
+                st.write(f"학생 이름: **{student['이름']}**")
+                # classes_info 컬렉션에서 과목 정보 가져오기
+                subject_names = collection.distinct("subject_name")
+                selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
+
+                if selected_subject:
+                    # 선택된 과목에 대한 세부 강좌 정보 가져오기
+                    classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
+                    class_names = [cls["class_name"] for cls in classes]
+                    selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
+
+                    if selected_class:
+                        # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
+                        evaluation = evaluation_collection.find_one({"학번": student_id, "수강강좌": selected_class})
+                        if evaluation and evaluation['수강강좌'] == selected_class:
+                            st.markdown("## 📊 최종 평가 정보")
+                            st.markdown(f"- **성적 등급**: {evaluation['성적등급']}")
+                            st.markdown(f"- **피드백**: {evaluation['피드백']}")
+                            st.write("## 📊 세부 평가 정보")
+                            # DataFrame을 이용하여 성취 목표와 성적 등급을 출력
+                            achievements_data = [
+                                {"성취 목표": achievement['성취 목표'], "성적 등급": achievement['성적 등급']}
+                                for achievement in evaluation["성취목표채점"]
+                            ]
+                            df = pd.DataFrame(achievements_data)
+                            st.dataframe(df)
+                        else:
+                            st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")
+            else:
+                st.error("잘못된 학번입니다")
+
+    if __name__ == "__main__":
+        main()
