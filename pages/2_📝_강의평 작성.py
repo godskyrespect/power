@@ -3,11 +3,11 @@ from pymongo import MongoClient
 import json
 
 st.set_page_config(
-    page_title="📘 강의평 작성",
-    page_icon="✏️"
+    page_title="강의평 작성",
+    page_icon="📝"
 )
 
-st.title("📘 강의평 작성")
+st.title("📝 강의평 작성")
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
@@ -16,7 +16,6 @@ collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
 
 # Streamlit 앱 시작
-st.title("강의평 작성")
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
