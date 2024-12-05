@@ -136,6 +136,6 @@ if prompt := st.chat_input('무엇을 도와드릴까요?'):
 
     retrived = [doc for doc in search(prompt)]
     with st.chat_message('assistant'):
-        answer = prompt_generator(query, retrived)
+        answer = prompt_generator(prompt, retrived)
         response = st.write_stream(answer)
     st.session_state.messages.append({"role": "assistant", "content": response})
