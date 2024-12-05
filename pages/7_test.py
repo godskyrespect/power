@@ -13,57 +13,8 @@ file_path = './text.json'
 with open(file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)
 
-
-# # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
-# with st.chat_message("user"):
-#     st.write("안녕하세여~")
-    
-# with st.chat_message("assistant"):
-#     st.write("인간시대의 끝이 도래했다")
-    
-# # 채팅 입력기 만들기
-# prompt = st.chat_input("아무거나 물어보세요.")
-# if prompt:
-#     with st.chat_message("user"):
-#         st.write(f'{prompt}')
-
-# def response_generator():
-#     response = "hello my name is chatgpt clone"
-#     for word in response.split():
-#         yield word + " "
-#         time.sleep(0.05)
-        
-    
-# # 채팅 히스토리 초기화하기
-# if "messages" not in st.session_state:
-#     st.session_state.messages = []
-
-# for message in st.session_state.messages:
-#     with st.chat_message(message['role']):
-#         st.markdown(message['content'])
-        
-# # := 할당하고 값을 반환함., 사용자가 입력하고 화면에 기억하는 코드
-# if prompt := st.chat_input("무엇을 도와드릴까요?"):
-#     with st.chat_message('user'):
-#         st.markdown(prompt)
-#     st.session_state.messages.append({"role": "user", "content": prompt})
-    
-# #chatgpt를 통해서 나온 대답을 받습니다.
-# response = f"Echo: {prompt}"
-
-# # 챗봇 답변을 작성해 줍니다. 
-# with st.chat_message("assistant"):
-#     response = st.write_stream(response_generator())
-# st.session_state.messages.append({"role": "assistant", "content": response})
-key = st.text_input("API키 입력하세요", "후광후광후")
-st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
-api_key = key
-client = OpenAI(api_key=api_key)
-# 불러온 데이터 확인
-#print(data)
-
 doc_list = [item['학과소개'] for item in data]
-
+    
 def search(query):
     # bm25_retriever = BM25Retriever.from_texts(
     #     doc_list, metadatas=[{"source": 1}]*len(doc_list)
@@ -117,28 +68,85 @@ def prompt_generator(query, docs):
     answer = chatgpt_generate(prompt)
     return answer
 
+# # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
+# with st.chat_message("user"):
+#     st.write("안녕하세여~")
+    
+# with st.chat_message("assistant"):
+#     st.write("인간시대의 끝이 도래했다")
+    
+# # 채팅 입력기 만들기
+# prompt = st.chat_input("아무거나 물어보세요.")
+# if prompt:
+#     with st.chat_message("user"):
+#         st.write(f'{prompt}')
 
-with st.container():
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-4o-mini"
+# def response_generator():
+#     response = "hello my name is chatgpt clone"
+#     for word in response.split():
+#         yield word + " "
+#         time.sleep(0.05)
         
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    
+# # 채팅 히스토리 초기화하기
+# if "messages" not in st.session_state:
+#     st.session_state.messages = []
+
+# for message in st.session_state.messages:
+#     with st.chat_message(message['role']):
+#         st.markdown(message['content'])
         
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
+# # := 할당하고 값을 반환함., 사용자가 입력하고 화면에 기억하는 코드
+# if prompt := st.chat_input("무엇을 도와드릴까요?"):
+#     with st.chat_message('user'):
+#         st.markdown(prompt)
+#     st.session_state.messages.append({"role": "user", "content": prompt})
+    
+# #chatgpt를 통해서 나온 대답을 받습니다.
+# response = f"Echo: {prompt}"
 
-if prompt := st.chat_input('무엇을 도와드릴까요?'):
-    with st.chat_message('user'):
-        st.markdown(prompt)
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
-    retrived = [doc for doc in search(prompt)]
-    with st.chat_message('assistant'):
-        answer = prompt_generator(prompt, retrived)
-        response = st.write_stream(answer)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+# # 챗봇 답변을 작성해 줍니다. 
+# with st.chat_message("assistant"):
+#     response = st.write_stream(response_generator())
+# st.session_state.messages.append({"role": "assistant", "content": response})
 
 
+key = st.text_input("API키 입력하세요", "후광후광후")
+api_key = key
+client = OpenAI(api_key=api_key)
+if st.button("새로고침"):
+    st.rerun()
+tab1 = st.tabs([tab1])
+with tab1:
+    st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
+    
+    # 불러온 데이터 확인
+    #print(data)
+    
+    
+    
+    
+    with st.container():
+        if "openai_model" not in st.session_state:
+            st.session_state["openai_model"] = "gpt-4o-mini"
+            
+        if "messages" not in st.session_state:
+            st.session_state.messages = []
+            
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+    st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
+    
+    if prompt := st.chat_input('무엇을 도와드릴까요?'):
+        with st.chat_message('user'):
+            st.markdown(prompt)
+        st.session_state.messages.append({"role": "user", "content": prompt})
+    
+        retrived = [doc for doc in search(prompt)]
+        with st.chat_message('assistant'):
+            answer = prompt_generator(prompt, retrived)
+            response = st.write_stream(answer)
+        st.session_state.messages.append({"role": "assistant", "content": response})
+    
+    
