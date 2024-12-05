@@ -7,10 +7,9 @@ import streamlit as st
 import random
 import time
 
-file_path = '.\text.json'
 
 
-with open(file_path, 'r', encoding='utf-8') as file:
+with open('text.json', 'r', encoding='utf-8') as file:
     data = json.load(file)  # JSON 데이터를 Python 객체로 변환
 # # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
 # with st.chat_message("user"):
