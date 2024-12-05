@@ -6,8 +6,10 @@ from openai import OpenAI
 import streamlit as st 
 import random
 import time
+import config
 
 
+client = OpenAI(api_key=config.OPENAI_API_KEY)
 
 file_path = './text.json'
 with open(file_path, 'r', encoding='utf-8') as file:
@@ -22,7 +24,7 @@ def search(query):
     # bm25_retriever.k = 3
 
 
-    embedding = OpenAIEmbeddings(api_key=api_key)
+    embedding = OpenAIEmbeddings(api_key=config.OPENAI_API_KEY)
     faiss_vectorstore = FAISS.from_texts(
         doc_list, embedding, metadatas=[{"source": i} for i in range(len(doc_list))]
     )
@@ -111,9 +113,6 @@ def prompt_generator(query, docs):
 # st.session_state.messages.append({"role": "assistant", "content": response})
 
 
-key = st.text_input("API키 입력하세요", "후광후광후")
-api_key = key
-client = OpenAI(api_key=api_key)
 
 st.title("🦾 CHATGPT 4o mini 따라함. 돈나가니깐 적당히 쓰세요.")
 st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
