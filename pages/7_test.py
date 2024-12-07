@@ -128,10 +128,9 @@ def prompt_generator(query, docs):
 #     response = st.write_stream(response_generator())
 # st.session_state.messages.append({"role": "assistant", "content": response})
 
-
+st.title("🤖 진로 설계 도우미")
 col1, col2 = st.columns([8, 2])
 with col1:
-    st.title("🤖 진로 설계 도우미")
     st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
 
 with col2:
