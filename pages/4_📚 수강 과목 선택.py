@@ -4,7 +4,7 @@ import pandas as pd
 from openai import OpenAI
 
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
-model = 'gpt-4o-mini'
+model = "gpt-4o-mini"
 def chatgpt_generate(query):
     messages = [{
         "role": "system",
