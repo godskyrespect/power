@@ -58,6 +58,7 @@ if not st.session_state.logged_in:
     st.warning("로그인 해주세요.")
 else:
     def main():
+        st.info("이 페이지에서는 나의 수업 평가에 대한 내용을 볼 수 있어요. 정보 과목을 검색해 보세요!", icon="🎅")
         st.title("📚 수강 과목 선택 페이지")
         student_id = st.session_state.student_id
 
