@@ -111,7 +111,7 @@ def show_recommendations(select):
 
 
   
-
+st.info("이 페이지에서는 우리 학교에서 추천하는 수업을 보거나 검색할 수 있어요!", icon="🎅")
 # st.title('우리 학교 수업')
 st.title("🔍우리학교 수업 찾기")
 search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요. 예: 정보')
