@@ -127,7 +127,7 @@ def prompt_generator(query, docs):
 # with st.chat_message("assistant"):
 #     response = st.write_stream(response_generator())
 # st.session_state.messages.append({"role": "assistant", "content": response})
-
+st.info("이 페이지에서는 AI한테 내가 원하는 대학교 학과에 대해서만 물어볼 수 있어요!", icon="🎅")
 st.title("🤖 진로 설계 도우미")
 col1, col2 = st.columns([8, 2])
 with col1:
