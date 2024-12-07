@@ -72,6 +72,7 @@ st.markdown("""
     </a>
     """, unsafe_allow_html=True)
 
+st.info("안녕하세요! 튜토리얼 산타홀애비에요~. 로그인을 먼저 해보세요!", icon="🎅")
 
 if st.session_state.logged_in:
     st.sidebar.success(f"안녕하세요, {st.session_state.name}님!")
