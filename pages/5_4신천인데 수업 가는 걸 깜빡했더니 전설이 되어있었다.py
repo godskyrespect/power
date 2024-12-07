@@ -119,7 +119,7 @@ tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
     matches = [item for item in school_data if item.get("class_name") == search_query]
     if matches:
-        st.write(matches['class_name'])
+        st.write(matches)
     else:
         if search_query:
             st.error("검색된 강의가 없습니다", icon="❕")
