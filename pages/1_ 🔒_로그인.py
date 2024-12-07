@@ -86,6 +86,7 @@ with tabs[0]:
             st.session_state.student_id = student_id
             st.session_state.name = user["이름"]
             st.success(f"환영합니다, {user['이름']}님!")
+            st.info("왼쪽의 강의평 열람을 눌러보세요!", icon="🎅")
         else:
             st.error("학번 또는 비밀번호가 잘못되었습니다.")
     st.markdown('</div>', unsafe_allow_html=True)
