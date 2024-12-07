@@ -103,6 +103,8 @@ else:
                             summary = prompt_generator(json_data)
                             with st.container(border=True):
                                 st.write(f"{summary}")
+                            if st.button("평가 새로고침하기"):
+                                st.rerun()
 
                             
                         else:
