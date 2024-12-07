@@ -8,8 +8,6 @@ import pandas as pd
 import streamlit as st
 
 
-st.set_page_config(page_title='료이키 텐카이', page_icon='♨️')
-
 MAPPING_EN2KO = {
     "passion": "열정적인 교수님",
     "benefit": "유익한 수업",
@@ -115,7 +113,7 @@ def show_recommendations(select):
   
 
 # st.title('우리 학교 수업')
-st.title("🕋ﷲ﷽")
+st.title("📚우리학교 수업 찾기")
 search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요')
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
 with tab1:
