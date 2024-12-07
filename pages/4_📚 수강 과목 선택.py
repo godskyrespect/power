@@ -2,6 +2,7 @@ import streamlit as st
 from pymongo import MongoClient
 import pandas as pd
 from openai import OpenAI
+import config
 
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 # model = "gpt-4o-mini"
