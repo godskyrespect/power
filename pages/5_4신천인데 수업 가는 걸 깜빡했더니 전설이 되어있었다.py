@@ -122,10 +122,10 @@ with tab1:
         
         with st.container(border=True):
             st.title(f"📔{matches[0]['class_name']}")
-            st.border()
+            st.divider()
             st.write(f"**수업 코드** : {matches[0]['class_id']}")
             st.write(f"**담당 교사** : {matches[0]['professor']}선생님")
-            st.border()
+            st.divider()
             st.header("과목 성취기준")
             achievements = matches[0]['achievements']
             achievement_list = achievements.split('", "')
