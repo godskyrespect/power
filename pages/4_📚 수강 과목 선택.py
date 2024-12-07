@@ -101,8 +101,9 @@ else:
                             }
 
                             summary = prompt_generator(json_data)
-                            st.write("🤖 AI도우미의 정리 :")
-                            st.write(f"{summary}")
+                            st.write("##🤖 수업 평가 정리 :")
+                            with st.container():
+                                st.write(f"{summary}")
 
                             
                         else:
