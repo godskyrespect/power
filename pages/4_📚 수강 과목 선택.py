@@ -104,7 +104,7 @@ else:
                                 "세부평가정보": achievements_data
                             }
 
-                            summary = prompt_generate(json_data)
+                            summary = prompt_generator(json_data)
                             st.write("🤖 AI도우미의 정리 :")
                             st.write(f"{summary}")
 
