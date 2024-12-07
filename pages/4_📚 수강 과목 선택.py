@@ -4,16 +4,11 @@ import pandas as pd
 from openai import OpenAI
 
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
-model = "gpt-4o-mini"
+# model = "gpt-4o-mini"
 def chatgpt_generate(query):
-    messages = [{
-        "role": "system",
-        "content": "You are a helpful assistant."
-    },{
-        "role": "user",
-        "content": query
-    }]
-    response = client.chat.completions.create(model=model, messages=messages)
+    messages = [{"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": query}]
+    response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
     answer = response.choices[0].message.content
     return answer
 
