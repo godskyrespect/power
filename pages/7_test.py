@@ -129,25 +129,26 @@ def prompt_generator(query, docs):
 # st.session_state.messages.append({"role": "assistant", "content": response})
 
 
-
-st.title("🤖 진로 설계 도우미")
-st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
-
-col1, col2 = st.columns([9, 1])
+col1, col2 = st.columns([8, 2])
 with col1:
-    if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-4o-mini"
-        
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
-        
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])   
+    st.title("🤖 진로 설계 도우미")
+    st.write("도우미 AI(가칭)은 실수를 할 수 있습니다. 중요한 정보는 선생님과 같이 확인하세요.")
+
 with col2:
     if st.button("대화 지우기"):
         st.session_state.messages.clear()
         st.rerun()
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-4o-mini"
+    
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])   
+
 
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
