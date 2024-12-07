@@ -121,7 +121,7 @@ with tab1:
     if matches:
         
         with st.container(border=True):
-            st.title(f"📔{matches[0]['class_name']")
+            st.title(f"📔{matches[0]['class_name']}")
             st.border()
             st.write(f"**수업 코드** : {matches[0]['class_id']}")
             st.write(f"**담당 교사** : {matches[0]['professor']}선생님")
