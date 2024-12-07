@@ -25,8 +25,8 @@ def prompt_generator(query):
     
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-client = MongoClient(MONGO_URI)
-data = client["teacher_page"]
+mongoclient = MongoClient(MONGO_URI)
+data = mongoclient["teacher_page"]
 evaluation_collection = data["evaluation"]
 
 db = client["highschool_db"]
