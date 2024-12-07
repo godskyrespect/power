@@ -132,7 +132,7 @@ with tab1:
             achievement_list[0] = achievement_list[0].lstrip('"')
             achievement_list[-1] = achievement_list[-1].rstrip('"')
             for idx, achievement in enumerate(achievement_list):
-                st.write(f"{idx+1}. {achievement}.")
+                st.write(f"{idx+1}. {achievement}")
             
           
     else:
