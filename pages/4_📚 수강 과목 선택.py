@@ -99,10 +99,9 @@ else:
                                 "피드백": feedback,
                                 "세부평가정보": achievements_data
                             }
-
-                            summary = prompt_generator(json_data)
                             st.write("## 🤖 수업 평가 정리 :")
-                            with st.container():
+                            summary = prompt_generator(json_data)
+                            with st.container(border=True):
                                 st.write(f"{summary}")
 
                             
