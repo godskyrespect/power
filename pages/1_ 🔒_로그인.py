@@ -11,7 +11,8 @@ if "student_id" not in st.session_state:
     st.session_state.student_id = ""
 if "name" not in st.session_state:
     st.session_state.name = ""
-
+# 없앨 예정
+st.info("로그인 창입니다. ID:10101, 비밀번호 : 1234")
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
