@@ -145,8 +145,9 @@ with col1:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])   
 with col2:
-    if st.button("방귀"):
+    if st.button("대화 지우기"):
         st.session_state.messages.clear()
+        st.rerun()
 
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
