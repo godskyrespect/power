@@ -91,7 +91,7 @@ def show_recommendations(select):
     st.divider()
     
     selection = [item['subject'] for item in recs['recommendations']]
-    options = st.multiselect(" ", selection, placeholder="제외할 교과 선택")
+    options = st.multiselect("표시하지 않을 교과를 선택하세요.", selection, placeholder="제외할 교과 선택")
     for rec in recs['recommendations']:
         subject = rec['subject']
         if subject in options:
