@@ -66,17 +66,35 @@ st.markdown("""
         background-color: #45a049; /* 마우스 오버 시 배경색 변경 */
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* 마우스 오버 시 그림자 증가 */
     }
+    .center-message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin-top: -250px; /* 화면 중심에서 조금 위로 올리기 */
+    }
+    .message-box {
+        background-color: rgba(128, 128, 128, 0.8); /* 회색 상자 배경 (투명도 80%) */
+        color: white; /* 글자 색상 */
+        padding: 15px; /* 상자 내부 여백 */
+        border-radius: 10px; /* 상자 모서리 둥글게 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+        font-size: 20px; /* 글자 크기 */
+        font-weight: bold;
+    }
     </style>
     <a href="https://teachrevolution.streamlit.app/" target="_blank">
         <button class="fixed-button">교사용 관리 페이지로 이동하기</button>
     </a>
+    <div class="center-message">
+        <div class="message-box">
+            🎅 안녕하세요! 튜토리얼 산타홀애비에요~. 로그인을 먼저 해보세요! 
+        </div>
+    </div>
     """, unsafe_allow_html=True)
-
-st.info("안녕하세요! 튜토리얼 산타홀애비에요~. 로그인을 먼저 해보세요!", icon="🎅")
 
 if st.session_state.logged_in:
     st.sidebar.success(f"안녕하세요, {st.session_state.name}님!")
 else:
     st.sidebar.info("로그인이 필요합니다.")
-
-
