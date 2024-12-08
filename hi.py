@@ -7,7 +7,7 @@ if "username" not in st.session_state:
     st.session_state.username = ""
     
 
-
+st.snow()
 # 제목 설정
 st.markdown("""
     <style>
