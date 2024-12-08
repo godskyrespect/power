@@ -149,7 +149,7 @@ with tab2:
     documents = get_documents()
     text = [doc['recommend_text'] for doc in documents]
     text = [f'🎓{txt}' for txt in text]
-    selection = st.pills(f'수업 추천 키워드', tex    t, selection_mode='single')
+    selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
     
     if selection:
         with st.container(border=True):
