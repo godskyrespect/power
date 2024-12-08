@@ -91,7 +91,7 @@ def show_recommendations(select):
     st.divider()
     
     selection = [item['subject'] for item in recs['recommendations']]
-    options = st.multiselect("표시하지 않을 교과를 선택해 주세요.", selection)
+    options = st.multiselect("표시하지 않을 교과를 선택해 주세요.", selection, placeholder="표시하지 않을 과목을 선택하세요.")
     for rec in recs['recommendations']:
         subject = rec['subject']
         if subject in options:
@@ -149,7 +149,7 @@ with tab2:
     documents = get_documents()
     text = [doc['recommend_text'] for doc in documents]
     text = [f'🎓{txt}' for txt in text]
-    selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
+    selection = st.pills(f'수업 추천 키워드', tex    t, selection_mode='single')
     
     if selection:
         with st.container(border=True):
