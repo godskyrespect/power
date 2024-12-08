@@ -71,7 +71,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 페이지 제목
-st.markdown('<h2 style="text-align: center;">온양고등학교 2025 고교학점제 수강신천 <span style="font-size: small;">교수님</span></h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center;">온양고등학교 2025 고교학점제 수강신청</h2>', unsafe_allow_html=True)
 tabs = st.tabs(["로그인", "회원가입"])
 # 로그인 탭
 with tabs[0]:
