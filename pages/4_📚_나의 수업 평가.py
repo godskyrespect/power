@@ -16,7 +16,8 @@ evaluation_collection = data["evaluation"]
 db = mongoclient["highschool_db"]
 collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
-teacher_collection = db["teacher_page"]
+
+#teacher_collection = db["teacher_page"]
 
 user_db = mongoclient["user_database"]
 student_collection = user_db["student"]
