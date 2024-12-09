@@ -89,7 +89,7 @@ else:
         if submit_button and subject_name and class_name and professor:
             class_id = find_classcode(subject_name)
             evaluation_data = {
-                "class_id": class_id,
+                "id": class_id,
                 "class_name": class_name,
                 "review_text": review_text,
                 "ratings": ratings
