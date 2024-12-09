@@ -94,6 +94,10 @@ else:
                 "review_text": review_text,
                 "ratings": ratings,
             }
+            st.write(type(class_id))
+            st.write(type(class_name))
+            st.write(type(review_text))
+            st.write(type(ratings))
             result = RequestPost(evaluation_data)
             st.write(result)
             if result == 200:
