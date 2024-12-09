@@ -90,48 +90,48 @@ else:
         if student_id:
             # 학생 학번으로 학생 이름 조회
             #student = student_collection.find_one({"학번": student_id})
-            if student:
-                st.write(f"학생 이름: **{student_name}**")
-                # classes_info 컬렉션에서 과목 정보 가져오기
-                subject_names = collection.distinct("subject_name")
-                selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
+            #if student:
+            st.write(f"학생 이름: **{student_name}**")
+            # classes_info 컬렉션에서 과목 정보 가져오기
+            subject_names = collection.distinct("subject_name")
+            selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
 
-                if selected_subject:
-                    # 선택된 과목에 대한 세부 강좌 정보 가져오기
-                    classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
-                    class_names = [cls["class_name"] for cls in classes]
-                    selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
+            if selected_subject:
+                # 선택된 과목에 대한 세부 강좌 정보 가져오기
+                classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
+                class_names = [cls["class_name"] for cls in classes]
+                selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
 
-                    if selected_class:
-                        # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
-                        evaluation = evaluation_collection.find_one({"학번": student_id, "수강강좌": selected_class})
-                        if evaluation and evaluation['수강강좌'] == selected_class:
-                            grade = evaluation['성적등급']
-                            feedback = evaluation['피드백']
-                            st.markdown("## 📊 최종 평가 정보")
-                            st.markdown(f"- **성적 등급**: {grade}")
-                            st.markdown(f"- **피드백**: {feedback}")
-                            st.write("## 📊 세부 평가 정보")
-                            # DataFrame을 이용하여 성취 목표와 성적 등급을 출력
-                            achievements_data = [
-                                {"성취 목표": achievement['성취 목표'], "성적 등급": achievement['성적 등급']}
-                                for achievement in evaluation["성취목표채점"]
-                            ]
-                            df = pd.DataFrame(achievements_data)
-                            st.dataframe(df)
+                if selected_class:
+                    # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
+                    evaluation = evaluation_collection.find_one({"학번": student_id, "수강강좌": selected_class})
+                    if evaluation and evaluation['수강강좌'] == selected_class:
+                        grade = evaluation['성적등급']
+                        feedback = evaluation['피드백']
+                        st.markdown("## 📊 최종 평가 정보")
+                        st.markdown(f"- **성적 등급**: {grade}")
+                        st.markdown(f"- **피드백**: {feedback}")
+                        st.write("## 📊 세부 평가 정보")
+                        # DataFrame을 이용하여 성취 목표와 성적 등급을 출력
+                        achievements_data = [
+                            {"성취 목표": achievement['성취 목표'], "성적 등급": achievement['성적 등급']}
+                            for achievement in evaluation["성취목표채점"]
+                        ]
+                        df = pd.DataFrame(achievements_data)
+                        st.dataframe(df)
 
-                            # ChatGPT를 이용한 수업 평가 요약 및 피드백
-                            st.write("## 🤖 수업 평가 정리 :")
-                            summary = prompt_generator(grade, feedback, achievements_data)
-                            with st.container(border=True):
-                                st.write(f"{summary}")
-                            if st.button("평가 새로고침하기"):
-                                st.rerun()
+                        # ChatGPT를 이용한 수업 평가 요약 및 피드백
+                        st.write("## 🤖 수업 평가 정리 :")
+                        summary = prompt_generator(grade, feedback, achievements_data)
+                        with st.container(border=True):
+                            st.write(f"{summary}")
+                        if st.button("평가 새로고침하기"):
+                            st.rerun()
 
-                            
-                        else:
-                            st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")
-            else:
+                        
+                    else:
+                        st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")
+            #else:
                 st.error("잘못된 학번입니다")
 
     if __name__ == "__main__":
