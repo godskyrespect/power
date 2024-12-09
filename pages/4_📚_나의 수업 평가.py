@@ -2,16 +2,16 @@ import config
 import streamlit as st
 import pandas as pd
 from openai import OpenAI
-from panda import pandaChickenApi
+from capstone import RequestApi
 
 # OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
 ## 0. API호출(수업정보, 리뷰정보)
-collection = pandaChickenApi("school")
-classes_review_collection = pandaChickenApi("school/reviews")
-student_collection = pandaChickenApi("user/student")
-evaluation_collection = pandaChickenApi("teacher/evaluation")
+collection = RequestApi("school")
+classes_review_collection = RequestApi("school/reviews")
+student_collection = RequestApi("user/student")
+evaluation_collection = RequestApi("teacher/evaluation")
 
 ## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
 def chatgpt_generate(query):
