@@ -5,7 +5,7 @@ import time
 import torch
 import numpy as np
 import pandas as pd
-import streamlit as st
+from ..utils.py import request_api
 
 ## 1. API주소 입력을 위한 한/영 변환
 MAPPING_EN2KO = {
@@ -30,11 +30,11 @@ st.markdown("""
 ## 2. API호출(수업정보, 리뷰정보)
 url_schoollist = "http://13.211.145.139:8000/school/info"
 response_sl = requests.get(url_schoollist)
-school_data = response_sl.json()
+school_data = request_api("school/info")
 
 url_ratings = "http://13.211.145.139:8000/school/ratings"
 response_rt = requests.get(url_ratings)
-ratings = response_rt.json()
+ratings = request_api("school/ratings")
 
 ## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
 def get_recommendations(query_ko):
