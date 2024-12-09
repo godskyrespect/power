@@ -105,7 +105,7 @@ else:
                             classes = subject.get('classes')
                             for cls in classes:
                                 class_names.append(cls['class_name'])
-                            break:
+                            break
 
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
 
