@@ -1,6 +1,9 @@
 import streamlit as st
+from pydantic import BaseModel
 from pymongo import MongoClient
+from capstone import RequestApi RequestPost
 import json
+
 
 st.set_page_config(
     page_title="강의평 작성",
@@ -15,6 +18,15 @@ client = MongoClient(MONGO_URI)
 db = client["highschool_db"]
 collection = db["classes_info"]
 classes_review_collection = db["classes_reviews"]
+
+school_data = RequestApi("school/info")
+
+## 4. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
+def find_classcode(class_name):
+    data = school_data
+    for cls in data:
+        if cls["class_name"] == class_name:
+            return int(cls["class_id"])
 
 # Streamlit 앱 시작
 
@@ -74,15 +86,19 @@ else:
 
         # 입력된 classes_evaluations 데이터 처리
         if submit_button and subject_name and class_name and professor:
+            class_id = find_classcode(class_name)
             evaluation_data = {
-                "subject_name": subject_name,
+                "class_id": class_id,
                 "class_name": class_name,
-                "professor": professor,
+                "review_text": review_text,
                 "ratings": ratings,
-                "review_text": review_text
             }
-            collection.insert_one(evaluation_data)
-            st.success("classes_evaluations 데이터가 성공적으로 저장되었습니다.")
+            result = RequestPost(evaluation_data)
+            if result == 200:
+                st.success("리뷰가 성공적으로 작성되었습니다.")
+            elif result == 404:
+                st.success("작성과정에서 오류가 발생하였습니다.")
+                print(result)
 
     # 강의평 열람 탭
     with tabs[1]:
