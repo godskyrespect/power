@@ -8,34 +8,30 @@ import random
 import time
 import config
 
-
+# OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
+# 학과정보 파일 로드 ===================================
 file_path = './text.json'
 with open(file_path, 'r', encoding='utf-8') as file:
     data = json.load(file)
 
+# 검색으로 사용할 내용 추출 =============================
 doc_list = [item['학과소개'] for item in data]
-    
+
+## 1. FAISS를 이용한 질의와 유사한 내용을 벡터 검색하는 함수(get:검색할 내용, return: 검색된 faiss문서)
 def search(query):
-    # bm25_retriever = BM25Retriever.from_texts(
-    #     doc_list, metadatas=[{"source": 1}]*len(doc_list)
-    # )
-    # bm25_retriever.k = 3
-
-
     embedding = OpenAIEmbeddings(api_key=st.secrets.OPENAI_API_KEY)
     faiss_vectorstore = FAISS.from_texts(
         doc_list, embedding, metadatas=[{"source": i} for i in range(len(doc_list))]
     )
     faiss_retriever = faiss_vectorstore.as_retriever(search_kwargs={"k":3})
 
-    # bm25_docs = bm25_retriever.invoke(query)
     faiss_docs = faiss_retriever.invoke(query)
 
-    # print(bm25_docs)
     return faiss_docs
 
+## 2. 프롬프트에 따른 LLM결과 출력하는 함수(get: 프롬프트, return: streamlit에 맞는 대답)
 def chatgpt_generate(query):
     
     messages = [{
@@ -47,7 +43,8 @@ def chatgpt_generate(query):
     }]
     response = client.chat.completions.create(model=st.session_state["openai_model"], messages=messages, stream=True)
     return response
-    
+
+## 3. 부적절한 표현이 있으면 1을 출력하는 함수(get: 질문, return: 부적절한표현인 경우 1)
 def slang_detector(query):
     messages = [{
         "role": "system",
@@ -62,6 +59,7 @@ def slang_detector(query):
     if answer == '1':
         return 1
 
+## 4. 질문과 검색된 내용으로 프롬프트를 작성하는 함수(get: 질문, docs: 학과정보문서, return: 프롬프트)
 def prompt_generator(query, docs):
     prompt = f"""
     당신은 고등학교 학생들의 진로설계를 도와주는 친절한 어시스턴트 입니다. 
@@ -86,47 +84,7 @@ def prompt_generator(query, docs):
     answer = chatgpt_generate(prompt)
     return answer
 
-# # st.chat_message 메시지 형태 띄우기  user: 사용자, assistant: GPT
-# with st.chat_message("user"):
-#     st.write("안녕하세여~")
-    
-# with st.chat_message("assistant"):
-#     st.write("인간시대의 끝이 도래했다")
-    
-# # 채팅 입력기 만들기
-# prompt = st.chat_input("아무거나 물어보세요.")
-# if prompt:
-#     with st.chat_message("user"):
-#         st.write(f'{prompt}')
-
-# def response_generator():
-#     response = "hello my name is chatgpt clone"
-#     for word in response.split():
-#         yield word + " "
-#         time.sleep(0.05)
-        
-    
-# # 채팅 히스토리 초기화하기
-# if "messages" not in st.session_state:
-#     st.session_state.messages = []
-
-# for message in st.session_state.messages:
-#     with st.chat_message(message['role']):
-#         st.markdown(message['content'])
-        
-# # := 할당하고 값을 반환함., 사용자가 입력하고 화면에 기억하는 코드
-# if prompt := st.chat_input("무엇을 도와드릴까요?"):
-#     with st.chat_message('user'):
-#         st.markdown(prompt)
-#     st.session_state.messages.append({"role": "user", "content": prompt})
-    
-# #chatgpt를 통해서 나온 대답을 받습니다.
-# response = f"Echo: {prompt}"
-
-# # 챗봇 답변을 작성해 줍니다. 
-# with st.chat_message("assistant"):
-#     response = st.write_stream(response_generator())
-# st.session_state.messages.append({"role": "assistant", "content": response})
+## Streamlit 사이트 코드 ============================
 st.info("이 페이지에서는 AI한테 내가 원하는 대학교 학과에 대해서만 물어볼 수 있어요!", icon="🎅")
 st.title("🤖 진로 설계 도우미")
 col1, col2 = st.columns([8, 2])
@@ -139,25 +97,33 @@ with col2:
         st.session_state.messages.clear()
         st.rerun()
 
+# 1. 생성형AI 모델 불러오기
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o-mini"
-    
+
+# 2. 대화를 지속하기 위한 LIST생성하기
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    
+
+# 3. 역할에 맞는 메시지창 표시하기
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])   
 
-
+# 4. 입력창을 만들고 검색기능 구현하기
 if prompt := st.chat_input('무엇을 도와드릴까요?'):
     with st.chat_message('user'):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # 부적절한 표현에 대한 경고 메시지
     if slang_detector(prompt) == 1:
         st.toast('적절하지 못한 표현은 자제하세요.', icon='🚨')
-        
+
+    # FAISS 검색기를 이용한 문서 내용
     retrived = [doc for doc in search(prompt)]
+
+    #질문에 대한 ASSISTANT에 대한 응답
     with st.chat_message('assistant'):
         answer = prompt_generator(prompt, retrived)
         response = st.write_stream(answer)
