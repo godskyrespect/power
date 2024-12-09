@@ -9,5 +9,5 @@ def RequestApi(link):
 
 def RequestPost(data):
   api_url = "http://13.211.145.139:8000/school/upload"
-  response = requests.post(url, json=data)
+  response = requests.post(api_url, json=data)
   return response.status_code
