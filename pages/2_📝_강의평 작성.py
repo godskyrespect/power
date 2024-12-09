@@ -92,7 +92,7 @@ else:
                 "class_id": class_id,
                 "class_name": class_name,
                 "review_text": review_text,
-                "ratings": ratings,
+                "ratings": ratings
             }
             st.write(f"{class_id}, {class_name}, {review_text}, {ratings}")
             result = RequestPost(evaluation_data)
