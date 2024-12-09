@@ -32,7 +32,7 @@ documents = RequestApi("recommend/recommends")
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
     data = RequestApi(f"recommend/{query_en}")
-    return data
+    return data[0]
     
 ## 4. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
 def find_professor(class_name):
@@ -52,7 +52,7 @@ def check_ratings(key):
 def show_recommendations(select):
     text = select.replace("🎓", "")
     recs = get_recommendations(text)
-    st.write(recs[0])
+    st.write(recs)
     rec_reason = recs['recommend_reason']
     st.subheader(f'"{select}"') 
     st.write(rec_reason)
