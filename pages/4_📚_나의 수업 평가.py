@@ -105,6 +105,7 @@ else:
                             df = pd.DataFrame(achievements_data)
                             st.dataframe(df)
 
+                            # ChatGPT를 이용한 수업 평가 요약 및 피드백
                             st.write("## 🤖 수업 평가 정리 :")
                             summary = prompt_generator(grade, feedback, achievements_data)
                             with st.container(border=True):
