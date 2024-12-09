@@ -113,7 +113,7 @@ else:
                 if selected_class:
                     # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
                     for student in evaluation_collection:
-                        if student["학번"] == student_id and student["수강강좌"] == course_name:
+                        if student["학번"] == student_id and student["수강강좌"] == selected_class:
                             evaluation = student
                     if evaluation and evaluation['수강강좌'] == selected_class:
                         grade = evaluation['성적등급']
