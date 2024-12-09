@@ -8,19 +8,6 @@ import requests
 # OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
-# MongoDB 연결 설정 ===================================
-MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-mongoclient = MongoClient(MONGO_URI)
-# data = mongoclient["teacher_page"]
-# evaluation_collection = data["evaluation"]
-
-# db = mongoclient["highschool_db"]
-# collection = db["classes_info"]
-# classes_review_collection = db["classes_reviews"]
-
-# user_db = mongoclient["user_database"]
-# student_collection = user_db["student"]
-
 ## 2. API호출(수업정보, 리뷰정보)
 url_school = "http://13.211.145.139:8000/school"
 response_sl = requests.get(url_school)
@@ -143,8 +130,6 @@ else:
                     else:
                         st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")   
 
-            #else:
-                #st.error("잘못된 학번입니다")
 
     if __name__ == "__main__":
         main()
