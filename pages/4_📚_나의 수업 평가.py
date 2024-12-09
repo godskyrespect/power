@@ -100,7 +100,6 @@ else:
 
             if selected_subject:
                 # 선택된 과목에 대한 세부 강좌 정보 가져오기
-                for subject in collection
                 classes = [item.get("class_name") for item in collection if collection["subject_name"] == selected_subject]
                 #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
                 class_names = [cls["class_name"] for cls in classes]
