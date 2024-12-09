@@ -117,7 +117,7 @@ else:
                     if evaluation and evaluation['수강강좌'] != selected_class:
                         st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")                       
                     else:
-                         grade = evaluation['성적등급']
+                        grade = evaluation['성적등급']
                         feedback = evaluation['피드백']
                         st.markdown("## 📊 최종 평가 정보")
                         st.markdown(f"- **성적 등급**: {grade}")
