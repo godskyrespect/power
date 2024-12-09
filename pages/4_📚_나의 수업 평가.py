@@ -104,8 +104,8 @@ else:
                     if subject["subject_name"] == selected_subject:
                         classes = [item.get("class_name") for item in collection]
                 #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
-                class_names = [cls["class_name"] for cls in classes]
-                selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
+                #class_names = [cls for cls in classes]
+                selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", classes, key="selected_class")
 
                 if selected_class:
                     # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
