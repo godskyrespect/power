@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-
+## 1. API주소 입력을 위한 한/영 변환
 MAPPING_EN2KO = {
     "passion": "열정적인 교수님",
     "benefit": "유익한 수업",
@@ -17,13 +17,6 @@ MAPPING_EN2KO = {
 }
 MAPPING_KO2EN = {v: k for k, v in MAPPING_EN2KO.items()}
 
-# MongoDB 연결 준비
-#uri = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-#client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
-#db = client['recommendations_db']
-#collection = db['recommendations']
-
-#documents = list(collection.find({}))
 st.markdown("""
     <style>
     h3 {
@@ -33,7 +26,8 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-##========================API LOAD=======================##
+
+## 2. API호출(수업정보, 리뷰정보)
 url_schoollist = "http://13.211.145.139:8000/school/info"
 response_sl = requests.get(url_schoollist)
 school_data = response_sl.json()
@@ -42,7 +36,7 @@ url_ratings = "http://13.211.145.139:8000/school/ratings"
 response_rt = requests.get(url_ratings)
 ratings = response_rt.json()
 
-##======================API REQUEST======================##
+## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
     print(query_en)
@@ -56,6 +50,7 @@ def get_recommendations(query_ko):
 
     return data
 
+## 4. 추천 키워드 API를 호출하는 함수(return : 키워드 API내용)
 def get_documents():
     url = "http://13.211.145.139:8000/recommend/recommends"
     response = requests.get(url)
@@ -68,19 +63,21 @@ def get_documents():
 
     return data
 
+## 5. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
 def find_professor(class_name):
     data = school_data
     for cls in data:
         if cls["class_name"] == class_name:
             return cls["professor"]
 
+## 6. 리뷰에서 별점만 반환하는 함수(get: 수업명(key), return: 별점(value))
 def check_ratings(key):
     data = ratings
     for item in data:
         if key in item:
             return int(item[key])
     
-    
+## 7. 추천 내용을 정리해서 보여주는 함수(get: 수업 키워드)
 def show_recommendations(select):
     text = select.replace("🎓", "")
     recs = get_recommendations(text)
@@ -112,10 +109,13 @@ def show_recommendations(select):
 
   
 st.info("이 페이지에서는 우리 학교에서 추천하는 수업을 보거나 검색할 수 있어요!", icon="🎅")
-# st.title('우리 학교 수업')
+
+## Streamlit 화면 ======================================
 st.title("🔍우리학교 수업 찾기")
 search_query = st.text_input("🔍 찾고싶은 수업을 검색해보세요.", placeholder='수업명을 입력하세요. 예: 정보')
 tab1, tab2 = st.tabs(["수업 검색", "추천 수업"])
+
+## 수업을 검색하여 과목별 정보를 알려주는 탭
 with tab1:
     matches = [item for item in school_data if item.get("class_name") == search_query]
     if matches:
@@ -138,13 +138,12 @@ with tab1:
     else:
         if search_query:
             st.error("검색된 강의가 없습니다", icon="❕")
-            #search_query2 = st.text_input("search", placeholder='수업명을 입력하세요', label_visibility='hidden')
 
+## 키워드에 따른 추천 수업을 보여주는 탭
 with tab2:
     st.header('울학교 선배님들의 추천 ✨')
     st.caption('GPT-4o 활용 추천',
                help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
-    
     
     documents = get_documents()
     text = [doc['recommend_text'] for doc in documents]
