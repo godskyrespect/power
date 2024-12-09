@@ -102,7 +102,7 @@ else:
                 # 선택된 과목에 대한 세부 강좌 정보 가져오기
                 for subject in collection:
                     if subject["subject_name"] == selected_subject:
-                        classes = [item.get("class_name") for item in collection]
+                        classes = [item.get("class_name") for item in subject]
                 #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
                 #class_names = [cls for cls in classes]
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", classes, key="selected_class")
@@ -139,7 +139,7 @@ else:
                     else:
                         st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")
             #else:
-                st.error("잘못된 학번입니다")
+                #st.error("잘못된 학번입니다")
 
     if __name__ == "__main__":
         main()
