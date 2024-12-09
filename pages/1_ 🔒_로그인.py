@@ -19,18 +19,18 @@ client = MongoClient(MONGO_URI)
 db = client["user_database"]
 users_collection = db["student"]
 
-# 비밀번호 해시 함수
+# 비밀번호 해시 함수(get: 사용자 비밀번호, return: 암호화된 비밀번호)
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# 사용자 인증 함수
+# 사용자 인증 함수(get: 아이디, 비밀번호, return: db에 저장된 학생ID)
 def authenticate_user(student_id, password):
     user = users_collection.find_one({"학번": student_id})
     if user and user["password"] == hash_password(password):
         return user
     return None
 
-# 사용자 등록 함수
+# 사용자 등록 함수(get: 아이디, 비밀번호, 이름)
 def register_user(student_id, password, name):
     users_collection.insert_one({
         "학번": student_id,
@@ -73,6 +73,7 @@ st.markdown("""
 # 페이지 제목
 st.markdown('<h2 style="text-align: center;">온양고등학교 2025 고교학점제 수강신청</h2>', unsafe_allow_html=True)
 tabs = st.tabs(["로그인", "회원가입"])
+
 # 로그인 탭
 with tabs[0]:
     st.header("로그인")
