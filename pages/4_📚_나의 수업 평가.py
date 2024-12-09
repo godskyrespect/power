@@ -34,6 +34,10 @@ url_student = "http://13.211.145.139:8000/user/student"
 response_rt = requests.get(url_student)
 student_collection = response_rt.json()
 
+url_evaluation = "http://13.211.145.139:8000/teacher/evaluation"
+response_rt = requests.get(url_evaluation)
+evaluation_collection = response_rt.json()
+
 
 ## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
 def chatgpt_generate(query):
@@ -95,12 +99,14 @@ else:
 
             if selected_subject:
                 # 선택된 과목에 대한 세부 강좌 정보 가져오기
-                classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
+                classes = [student.get("subject_name") for student in data if "subject_name" in student]
+                #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
                 class_names = [cls["class_name"] for cls in classes]
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
 
                 if selected_class:
                     # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
+                    
                     evaluation = evaluation_collection.find_one({"학번": student_id, "수강강좌": selected_class})
                     if evaluation and evaluation['수강강좌'] == selected_class:
                         grade = evaluation['성적등급']
