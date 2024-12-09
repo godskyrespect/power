@@ -59,7 +59,6 @@ else:
 
             # 선택된 세부 과목명에 해당하는 교수명 가져오기
             if class_name:
-                filtered_documents = list(collection.find({"subject_name": subject_name}))
                 professors = list(set(
                     class_obj["professor"]
                     for doc in filtered_documents
