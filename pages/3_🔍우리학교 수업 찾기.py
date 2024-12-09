@@ -1,8 +1,5 @@
 import streamlit as st
-import certifi
-import requests
-import time
-import torch
+
 import numpy as np
 import pandas as pd
 from utils import capstoneApi
@@ -30,49 +27,29 @@ st.markdown("""
 ## 2. API호출(수업정보, 리뷰정보)
 school_data = capstoneApi("school/info")
 ratings = capstoneApi("school/ratings")
+documents = RequestApi("recommend/recommends")
 
 ## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
-    print(query_en)
-    url = f"http://13.211.145.139:8000/recommend/{query_en}"
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = response.json()[0]
-    else:
-        print(f"Request failed with status code: {response.status_code}")
-
+    data = RequestApi(f"/recommend/{query_en}")
     return data
-
-## 4. 추천 키워드 API를 호출하는 함수(return : 키워드 API내용)
-def get_documents():
-    url = "http://13.211.145.139:8000/recommend/recommends"
-    response = requests.get(url)
     
-    if response.status_code == 200:
-        data = response.json()
-        print(data)
-    else:
-        print(f"Request failed with status code: {response.status_code}")
-
-    return data
-
-## 5. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
+## 4. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
 def find_professor(class_name):
     data = school_data
     for cls in data:
         if cls["class_name"] == class_name:
             return cls["professor"]
 
-## 6. 리뷰에서 별점만 반환하는 함수(get: 수업명(key), return: 별점(value))
+## 5. 리뷰에서 별점만 반환하는 함수(get: 수업명(key), return: 별점(value))
 def check_ratings(key):
     data = ratings
     for item in data:
         if key in item:
             return int(item[key])
     
-## 7. 추천 내용을 정리해서 보여주는 함수(get: 수업 키워드)
+## 6. 추천 내용을 정리해서 보여주는 함수(get: 수업 키워드)
 def show_recommendations(select):
     text = select.replace("🎓", "")
     recs = get_recommendations(text)
