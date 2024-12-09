@@ -100,7 +100,9 @@ else:
 
             if selected_subject:
                 # 선택된 과목에 대한 세부 강좌 정보 가져오기
-                classes = [item.get("class_name") for item in collection if collection["subject_name"] == selected_subject]
+                for subject in collection:
+                    if subject["subject_name"] == selected_subject:
+                        classes = [item.get("class_name") for item in collection]
                 #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
                 class_names = [cls["class_name"] for cls in classes]
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
