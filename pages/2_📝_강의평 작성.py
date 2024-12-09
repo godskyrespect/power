@@ -1,7 +1,8 @@
 import streamlit as st
 from pydantic import BaseModel
 from pymongo import MongoClient
-from capstone import RequestApi, RequestPost
+from capstone import RequestApi
+from capstone import RequestPost
 import json
 
 
