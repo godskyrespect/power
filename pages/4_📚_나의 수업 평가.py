@@ -95,7 +95,6 @@ else:
             st.write(f"학생 이름: **{student_name}**")
             # classes_info 컬렉션에서 과목 정보 가져오기
             subject_names = [item.get("subject_name") for item in collection]
-            # subject_names = collection.distinct("subject_name")
             selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
 
             if selected_subject:
@@ -106,8 +105,8 @@ else:
                             classes = subject.get('classes')
                             for cls in classes:
                                 class_names.append(cls['class_name'])
-                #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
-                #class_names = [cls for cls in classes]
+                            break:
+
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
 
                 if selected_class:
