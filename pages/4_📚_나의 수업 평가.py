@@ -22,13 +22,17 @@ user_db = mongoclient["user_database"]
 student_collection = user_db["student"]
 
 ## 2. API호출(수업정보, 리뷰정보)
-# url_school = "http://13.211.145.139:8000/school"
-# response_sl = requests.get(url_school)
-# collection = response_sl.json()
+url_school = "http://13.211.145.139:8000/school"
+response_sl = requests.get(url_school)
+collection = response_sl.json()
 
-# url_reviews = "http://13.211.145.139:8000/school/reviews"
-# response_rt = requests.get(url_reviews)
-# classes_review_collection = response_rt.json()
+url_reviews = "http://13.211.145.139:8000/school/reviews"
+response_rt = requests.get(url_reviews)
+classes_review_collection = response_rt.json()
+
+url_student = "http://13.211.145.139:8000/user/student"
+response_rt = requests.get(url_students)
+student_collection = response_rt.json()
 
 
 ## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
@@ -81,12 +85,13 @@ else:
         st.info("이 페이지에서는 나의 수업 평가에 대한 내용을 볼 수 있어요. 정보 과목을 검색해 보세요!", icon="🎅")
         st.title("📚 나의 수업 평가")
         student_id = st.session_state.student_id
+        student_name = st.session_state.name
 
         if student_id:
             # 학생 학번으로 학생 이름 조회
-            student = student_collection.find_one({"학번": student_id})
+            #student = student_collection.find_one({"학번": student_id})
             if student:
-                st.write(f"학생 이름: **{student['이름']}**")
+                st.write(f"학생 이름: **{student_name}**")
                 # classes_info 컬렉션에서 과목 정보 가져오기
                 subject_names = collection.distinct("subject_name")
                 selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
