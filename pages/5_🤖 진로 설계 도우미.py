@@ -1,11 +1,8 @@
 import json
-from langchain_community.retrievers import BM25Retriever
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from openai import OpenAI
 import streamlit as st 
-import random
-import time
 import config
 
 # OpenAI 연결 설정 ====================================
