@@ -2,8 +2,9 @@ import streamlit as st
 from pymongo import MongoClient
 import pandas as pd
 from openai import OpenAI
+from panda import pandaChickenApi
 import config
-import requests
+
 
 # OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
@@ -11,19 +12,19 @@ client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 ## 2. API호출(수업정보, 리뷰정보)
 url_school = "http://13.211.145.139:8000/school"
 response_sl = requests.get(url_school)
-collection = response_sl.json()
+collection = pandaChickenApi("school")
 
 url_reviews = "http://13.211.145.139:8000/school/reviews"
 response_rt = requests.get(url_reviews)
-classes_review_collection = response_rt.json()
+classes_review_collection = pandaChickenApi("school/reviews")
 
 url_student = "http://13.211.145.139:8000/user/student"
 response_rt = requests.get(url_student)
-student_collection = response_rt.json()
+student_collection = pandaChickenApi("user/student")
 
 url_evaluation = "http://13.211.145.139:8000/teacher/evaluation"
 response_rt = requests.get(url_evaluation)
-evaluation_collection = response_rt.json()
+evaluation_collection = pandaChickenApi("teacher/evaluation")
 
 
 ## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
