@@ -52,7 +52,6 @@ def check_ratings(key):
 def show_recommendations(select):
     text = select.replace("🎓", "")
     recs = get_recommendations(text)
-    st.write(recs)
     rec_reason = recs['recommend_reason']
     st.subheader(f'"{select}"') 
     st.write(rec_reason)
