@@ -94,20 +94,23 @@ else:
         if student_id:
             st.write(f"학생 이름: **{student_name}**")
             # classes_info 컬렉션에서 과목 정보 가져오기
-            subject_names = collection.distinct("subject_name")
+            subject_names = [item.get("subject_name") for item in collection]
+            # subject_names = collection.distinct("subject_name")
             selected_subject = st.selectbox("📖 수강 과목을 선택하세요:", subject_names, key="selected_subject")
 
             if selected_subject:
                 # 선택된 과목에 대한 세부 강좌 정보 가져오기
-                classes = [student.get("subject_name") for student in data if "subject_name" in student]
+                for subject in collection
+                classes = [item.get("class_name") for item in collection if collection["subject_name"] == selected_subject]
                 #classes = collection.find_one({"subject_name": selected_subject}).get("classes", [])
                 class_names = [cls["class_name"] for cls in classes]
                 selected_class = st.selectbox("📝 세부 강좌를 선택하세요:", class_names, key="selected_class")
 
                 if selected_class:
                     # evaluation 컬렉션에서 세부 강좌에 맞는 정보 출력
-                    
-                    evaluation = evaluation_collection.find_one({"학번": student_id, "수강강좌": selected_class})
+                    for student in evaluation_collection:
+                        if student["학번"] == student_id and student["수강강좌"] == course_name:
+                            evaluation = student
                     if evaluation and evaluation['수강강좌'] == selected_class:
                         grade = evaluation['성적등급']
                         feedback = evaluation['피드백']
