@@ -30,11 +30,11 @@ st.markdown("""
 ## 2. API호출(수업정보, 리뷰정보)
 url_schoollist = "http://13.211.145.139:8000/school/info"
 response_sl = requests.get(url_schoollist)
-school_data = request_api("school/info")
+school_data = capstoneApi("school/info")
 
 url_ratings = "http://13.211.145.139:8000/school/ratings"
 response_rt = requests.get(url_ratings)
-ratings = request_api("school/ratings")
+ratings = capstoneApi("school/ratings")
 
 ## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
 def get_recommendations(query_ko):
