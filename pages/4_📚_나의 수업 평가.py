@@ -4,26 +4,10 @@ import pandas as pd
 from openai import OpenAI
 import config
 
+# OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
-# model = "gpt-4o-mini"
-def chatgpt_generate(query):
-    messages = [{"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": query}]
-    response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
-    answer = response.choices[0].message.content
-    return answer
 
-def prompt_generator(query):
-    prompt = f"""
-    당신의 역할은 JSON형태의 데이터가 주어지면 고등학생에게 그에 맞는 조언을 해주어야 합니다. 
-    데이터에는 학생의 성적, 교사의 피드백, 성취기준별 수행정도가 적혀있습니다. 이 데이터를 바탕으로 학생이 노력해야할 성취기준을 알려주세요. 그리고 교사의 피드백을 참고하여 적절한 조언을 적어주세요.
-    조언을 해줄 때에는 ~요. 형태로 끝나는 문장을 사용해야 하며 문단의 끝에는 이모티콘을 포함해야 합니다.
-    데이터 : {query}
-    """        
-    answer = chatgpt_generate(prompt)
-    return answer
-    
-# MongoDB 연결 설정
+# MongoDB 연결 설정 ===================================
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 mongoclient = MongoClient(MONGO_URI)
 data = mongoclient["teacher_page"]
@@ -37,6 +21,32 @@ teacher_collection = db["teacher_page"]
 user_db = mongoclient["user_database"]
 student_collection = user_db["student"]
 
+## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
+def chatgpt_generate(query):
+    messages = [{"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": query}]
+    response = client.chat.completions.create(model="gpt-4o-mini", messages=messages)
+    answer = response.choices[0].message.content
+    return answer
+
+## 2. 평가 데이터(JSON)을 포함하여 LLM에게 전달할 프롬프트를 생성하는 함수(get: 학생 평가 데이터.json)
+def prompt_generator(grade, feedback, data):
+    json_data = {
+        "성적 등급": grade,
+        "피드백": feedback,
+        "세부평가정보": data
+    }
+    
+    prompt = f"""
+    당신의 역할은 JSON형태의 데이터가 주어지면 고등학생에게 그에 맞는 조언을 해주어야 합니다. 
+    데이터에는 학생의 성적, 교사의 피드백, 성취기준별 수행정도가 적혀있습니다. 이 데이터를 바탕으로 학생이 노력해야할 성취기준을 알려주세요. 그리고 교사의 피드백을 참고하여 적절한 조언을 적어주세요.
+    조언을 해줄 때에는 ~요. 형태로 끝나는 문장을 사용해야 하며 문단의 끝에는 이모티콘을 포함해야 합니다. 최소 800자 이상 작성하세요.
+    데이터 : {query}
+    """        
+    answer = chatgpt_generate(json_data)
+    return answer
+
+## Streamlit 사이트 코드 ============================
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 if "student_id" not in st.session_state:
@@ -95,13 +105,8 @@ else:
                             df = pd.DataFrame(achievements_data)
                             st.dataframe(df)
 
-                            json_data = {
-                                "성적 등급": grade,
-                                "피드백": feedback,
-                                "세부평가정보": achievements_data
-                            }
                             st.write("## 🤖 수업 평가 정리 :")
-                            summary = prompt_generator(json_data)
+                            summary = prompt_generator(grade, feedback, achievements_data)
                             with st.container(border=True):
                                 st.write(f"{summary}")
                             if st.button("평가 새로고침하기"):
