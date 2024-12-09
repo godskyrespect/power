@@ -31,7 +31,7 @@ documents = RequestApi("recommend/recommends")
 ## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
 def get_recommendations(query_ko):
     query_en = MAPPING_KO2EN[query_ko]
-    data = RequestApi(f"/recommend/{query_en}")
+    data = RequestApi(f"recommend/{query_en}")
     return data
     
 ## 4. 수업별 담당 선생님을 알려주는 함수(get: 수업명, return: 선생님 이름)
