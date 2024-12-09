@@ -11,28 +11,28 @@ client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 # MongoDB 연결 설정 ===================================
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 mongoclient = MongoClient(MONGO_URI)
-data = mongoclient["teacher_page"]
-evaluation_collection = data["evaluation"]
+# data = mongoclient["teacher_page"]
+# evaluation_collection = data["evaluation"]
 
-db = mongoclient["highschool_db"]
-collection = db["classes_info"]
-classes_review_collection = db["classes_reviews"]
+# db = mongoclient["highschool_db"]
+# collection = db["classes_info"]
+# classes_review_collection = db["classes_reviews"]
 
-user_db = mongoclient["user_database"]
-student_collection = user_db["student"]
+# user_db = mongoclient["user_database"]
+# student_collection = user_db["student"]
 
 ## 2. API호출(수업정보, 리뷰정보)
-# url_school = "http://13.211.145.139:8000/school"
-# response_sl = requests.get(url_school)
-# collection = response_sl.json()
+url_school = "http://13.211.145.139:8000/school"
+response_sl = requests.get(url_school)
+collection = response_sl.json()
 
-# url_reviews = "http://13.211.145.139:8000/school/reviews"
-# response_rt = requests.get(url_reviews)
-# classes_review_collection = response_rt.json()
+url_reviews = "http://13.211.145.139:8000/school/reviews"
+response_rt = requests.get(url_reviews)
+classes_review_collection = response_rt.json()
 
-# url_student = "http://13.211.145.139:8000/user/student"
-# response_rt = requests.get(url_students)
-# student_collection = response_rt.json()
+url_student = "http://13.211.145.139:8000/user/student"
+response_rt = requests.get(url_students)
+student_collection = response_rt.json()
 
 
 ## 1. 작성된 프롬프트를 LLM에 전달하고 응답을 받는 함수(get: 프롬프트)
@@ -88,9 +88,6 @@ else:
         student_name = st.session_state.name
 
         if student_id:
-            # 학생 학번으로 학생 이름 조회
-            #student = student_collection.find_one({"학번": student_id})
-            #if student:
             st.write(f"학생 이름: **{student_name}**")
             # classes_info 컬렉션에서 과목 정보 가져오기
             subject_names = collection.distinct("subject_name")
