@@ -114,8 +114,10 @@ else:
                     for student in evaluation_collection:
                         if student["학번"] == student_id and student["수강강좌"] == selected_class:
                             evaluation = student
-                    if evaluation and evaluation['수강강좌'] == selected_class:
-                        grade = evaluation['성적등급']
+                    if evaluation and evaluation['수강강좌'] != selected_class:
+                        st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")                       
+                    else:
+                         grade = evaluation['성적등급']
                         feedback = evaluation['피드백']
                         st.markdown("## 📊 최종 평가 정보")
                         st.markdown(f"- **성적 등급**: {grade}")
@@ -137,9 +139,6 @@ else:
                         if st.button("평가 새로고침하기"):
                             st.rerun()
 
-                        
-                    else:
-                        st.error("해당 세부 강좌에 대한 평가 정보가 없습니다.")
             #else:
                 #st.error("잘못된 학번입니다")
 
