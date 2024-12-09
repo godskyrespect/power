@@ -31,7 +31,7 @@ response_rt = requests.get(url_reviews)
 classes_review_collection = response_rt.json()
 
 url_student = "http://13.211.145.139:8000/user/student"
-response_rt = requests.get(url_students)
+response_rt = requests.get(url_student)
 student_collection = response_rt.json()
 
 
