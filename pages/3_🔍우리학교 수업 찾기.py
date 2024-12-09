@@ -5,7 +5,7 @@ import time
 import torch
 import numpy as np
 import pandas as pd
-from utils import request_api
+from utils import capstoneApi
 
 ## 1. API주소 입력을 위한 한/영 변환
 MAPPING_EN2KO = {
