@@ -115,8 +115,7 @@ with tab2:
     st.header('울학교 선배님들의 추천 ✨')
     st.caption('GPT-4o 활용 추천',
                help='인공지능 GPT-4o로 기존의 리뷰의 일부를 분석해 수업을 추천합니다.')
-    
-    documents = get_documents()
+
     text = [doc['recommend_text'] for doc in documents]
     text = [f'🎓{txt}' for txt in text]
     selection = st.pills(f'수업 추천 키워드', text, selection_mode='single')
