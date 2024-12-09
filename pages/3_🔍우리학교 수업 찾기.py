@@ -1,7 +1,6 @@
-import streamlit as st
-
 import numpy as np
 import pandas as pd
+import streamlit as st
 from utils import capstoneApi
 
 ## 1. API주소 입력을 위한 한/영 변환
