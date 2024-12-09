@@ -95,6 +95,7 @@ else:
                 "ratings": ratings,
             }
             result = RequestPost(evaluation_data)
+            st.write(result)
             if result == 200:
                 st.success("리뷰가 성공적으로 작성되었습니다.")
             elif result == 404:
