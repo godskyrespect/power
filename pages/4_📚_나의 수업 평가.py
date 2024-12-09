@@ -41,9 +41,9 @@ def prompt_generator(grade, feedback, data):
     당신의 역할은 JSON형태의 데이터가 주어지면 고등학생에게 그에 맞는 조언을 해주어야 합니다. 
     데이터에는 학생의 성적, 교사의 피드백, 성취기준별 수행정도가 적혀있습니다. 이 데이터를 바탕으로 학생이 노력해야할 성취기준을 알려주세요. 그리고 교사의 피드백을 참고하여 적절한 조언을 적어주세요.
     조언을 해줄 때에는 ~요. 형태로 끝나는 문장을 사용해야 하며 문단의 끝에는 이모티콘을 포함해야 합니다. 최소 800자 이상 작성하세요.
-    데이터 : {query}
+    데이터 : {json_data}
     """        
-    answer = chatgpt_generate(json_data)
+    answer = chatgpt_generate(prompt)
     return answer
 
 ## Streamlit 사이트 코드 ============================
