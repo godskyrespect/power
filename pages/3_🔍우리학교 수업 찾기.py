@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-from utils import capstoneApi
+from capstone import RequestApi
 
 ## 1. API주소 입력을 위한 한/영 변환
 MAPPING_EN2KO = {
@@ -24,8 +24,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 ## 2. API호출(수업정보, 리뷰정보)
-school_data = capstoneApi("school/info")
-ratings = capstoneApi("school/ratings")
+school_data = RequestApi("school/info")
+ratings = RequestApi("school/ratings")
 documents = RequestApi("recommend/recommends")
 
 ## 3. 추천 내용 API를 호출하는 함수(get: 추천키워드, return: 추천 API내용)
