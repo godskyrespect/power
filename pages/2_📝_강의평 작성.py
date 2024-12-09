@@ -55,7 +55,7 @@ else:
             filtered_documents = list(collection.find({"subject_name": subject_name}))
             class_names = list(set(class_obj["class_name"] for doc in filtered_documents for class_obj in doc.get("classes", [])))
             if class_names:
-                st.selectbox("세부 과목명", class_names, key="class_select")
+                class_name = st.selectbox("세부 과목명", class_names, key="class_select")
 
             # 선택된 세부 과목명에 해당하는 교수명 가져오기
             if class_name:
