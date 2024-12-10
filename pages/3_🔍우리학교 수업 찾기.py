@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from capstone import RequestApi
-
+st.sidebar.image("image.png", use_container_width=True)
 ## 1. API주소 입력을 위한 한/영 변환
 MAPPING_EN2KO = {
     "passion": "열정적인 교수님",
