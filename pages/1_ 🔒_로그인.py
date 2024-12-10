@@ -71,7 +71,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 페이지 제목
-st.markdown('<h2 style="text-align: center;">공주고등학교 2025 고교학점제 도우미 사이트</h2>', unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center;">고교학점제 도우미 사이트</h2>', unsafe_allow_html=True)
 tabs = st.tabs(["로그인", "회원가입"])
 
 # 로그인 탭
