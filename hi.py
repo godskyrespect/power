@@ -23,8 +23,8 @@ st.markdown("""
     }
     </style>
     <div class="title-container">
-        <h1>🏫 온양고등학교 2025</h1>
-        <h3>고교학점제 강의평가록</h3>
+        <h1>🏫 공주고등학교 2025</h1>
+        <h3>고교학점제 도우미 사이트</h3>
     </div>
     """, unsafe_allow_html=True)
 
@@ -89,7 +89,7 @@ st.markdown("""
     </a>
     <div class="center-message">
         <div class="message-box">
-            🎅 안녕하세요! 튜토리얼 산타홀애비에요~. 로그인을 먼저 해보세요! 
+            🎅 안녕하세요! 튜토리얼 산타홀애비에요~. 왼쪽에서 로그인을 먼저 해보세요! 
         </div>
     </div>
     """, unsafe_allow_html=True)
