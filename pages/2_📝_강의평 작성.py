@@ -79,7 +79,7 @@ else:
                     if class_obj["class_name"] == class_name
                 ))
                 if professors:
-                    professor = st.selectbox("교수님", professors, key="professor_select")
+                    professor = st.selectbox("선생님", professors, key="professor_select")
 
         ratings = st.slider("평점", 1.0, 5.0, 3.0, 0.5)
         review_text = st.text_area("리뷰 내용")
