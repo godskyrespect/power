@@ -71,8 +71,6 @@ def set_background(image_path):
 image_path = "image1.jpg"  # 이미지 경로를 변경하세요
 set_background(image_path)
 
-st.write("배경 이미지를 로컬 경로에서 불러왔습니다!")
-
 
 # HTML과 CSS를 이용해 우측 하단에 스타일이 적용된 버튼 배치
 st.markdown("""
