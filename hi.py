@@ -8,7 +8,7 @@ if "username" not in st.session_state:
     
 
 st.snow()
-st.logo("image.png", use_container_width=True)
+st.logo("image.png")
 # 제목 설정
 st.markdown("""
     <style>
