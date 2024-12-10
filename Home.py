@@ -6,7 +6,7 @@ if "logged_in" not in st.session_state:
 if "username" not in st.session_state:
     st.session_state.username = ""
     
-
+st.set_page_config(page_title="공주고등학교 2025", page_icon="🏫")
 st.snow()
 st.sidebar.image("image.png", use_container_width=True)
 # 제목 설정
