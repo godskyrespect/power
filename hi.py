@@ -8,7 +8,7 @@ if "username" not in st.session_state:
     
 
 st.snow()
-st.logo("image.png", size = "large")
+st.sidebar.image("image.png", use_container_width=True)
 # 제목 설정
 st.markdown("""
     <style>
