@@ -31,6 +31,36 @@ def find_classcode(subject_name):
             return int(cls["_id"])
 
 # Streamlit 앱 시작
+st.markdown("""
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .tab-content {
+            padding: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+        }
+        .stButton > button {
+            width: 100%;
+            height: 3rem;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        .stButton > button:hover {
+            background-color: #45a049;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
