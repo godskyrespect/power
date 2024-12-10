@@ -4,6 +4,8 @@ import pandas as pd
 from openai import OpenAI
 from capstone import RequestApi
 
+
+st.sidebar.image("image.png", use_container_width=True)
 # OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
