@@ -94,7 +94,6 @@ else:
                 "review_text": review_text,
                 "ratings": ratings
             }
-            st.write(f"{class_id}, {class_name}, {review_text}, {ratings}")
             result = RequestPost(evaluation_data)
             if result == 200:
                 st.success("리뷰가 성공적으로 작성되었습니다.")
