@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import hashlib
 
 st.set_page_config(page_title="로그인", page_icon="🔒")
-st.logo("image.png", use_container_width=True)
+st.sidebar.image("image.png", use_container_width=True)
 
 # 세션 상태 초기화
 if "logged_in" not in st.session_state:
