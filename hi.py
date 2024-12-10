@@ -32,13 +32,13 @@ st.markdown("""
 st.markdown("""
     <style>
     body {
-        background-image: url('https://ibb.co/gF8wk7h');
+        background-image: url('https://postfiles.pstatic.net/MjAyNDEyMTFfNjAg/MDAxNzMzODQ5MDIzNTc2.FXc5bjL9__B7jrwuP-IJa_nH6vI6er7flonBnXxPv9wg.Lwp-tERloyR0Tp2rsdnA4VNHg3hIKzpD55ePLlgczfkg.JPEG/image1.jpg?type=w966');
         background-size: cover; /* 이미지를 화면에 맞추기 */
         background-position: center; /* 이미지 중앙에 위치 */
         background-repeat: no-repeat; /* 이미지 반복 제거 */
     }
     .stApp {
-        background-image: url('https://ibb.co/gF8wk7h');
+        background-image: url('https://postfiles.pstatic.net/MjAyNDEyMTFfNjAg/MDAxNzMzODQ5MDIzNTc2.FXc5bjL9__B7jrwuP-IJa_nH6vI6er7flonBnXxPv9wg.Lwp-tERloyR0Tp2rsdnA4VNHg3hIKzpD55ePLlgczfkg.JPEG/image1.jpg?type=w966');
         background-size: cover; /* 이미지를 화면에 맞추기 */
         background-position: center; /* 이미지 중앙에 위치 */
         background-repeat: no-repeat; /* 이미지 반복 제거 */
