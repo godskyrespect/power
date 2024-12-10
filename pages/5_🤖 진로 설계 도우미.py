@@ -5,6 +5,8 @@ from openai import OpenAI
 import streamlit as st 
 import config
 
+
+st.sidebar.image("image.png", use_container_width=True)
 # OpenAI 연결 설정 ====================================
 client = OpenAI(api_key=st.secrets.OPENAI_API_KEY)
 
