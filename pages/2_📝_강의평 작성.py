@@ -13,6 +13,7 @@ st.set_page_config(
 
 st.info("이 페이지에서는 수업별로 강의평을 입력하고 볼 수 있어요!", icon="🎅")
 st.title("📝 강의평 작성")
+st.sidebar.image("image.png", use_container_width=True)
 # MongoDB 연결 설정
 MONGO_URI = "mongodb+srv://jsheek93:j103203j@cluster0.7pdc1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGO_URI)
