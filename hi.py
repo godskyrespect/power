@@ -31,15 +31,20 @@ st.markdown("""
 
 st.markdown("""
     <style>
+    body {
+        background-image: url('https://ibb.co/gF8wk7h');
+        background-size: cover; /* 이미지를 화면에 맞추기 */
+        background-position: center; /* 이미지 중앙에 위치 */
+        background-repeat: no-repeat; /* 이미지 반복 제거 */
+    }
     .stApp {
-        background-image: url('/image1.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        background-image: url('https://ibb.co/gF8wk7h');
+        background-size: cover; /* 이미지를 화면에 맞추기 */
+        background-position: center; /* 이미지 중앙에 위치 */
+        background-repeat: no-repeat; /* 이미지 반복 제거 */
     }
     </style>
     """, unsafe_allow_html=True)
-
 
 # HTML과 CSS를 이용해 우측 하단에 스타일이 적용된 버튼 배치
 st.markdown("""
