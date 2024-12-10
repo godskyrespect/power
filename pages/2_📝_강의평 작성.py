@@ -130,7 +130,7 @@ else:
                     if class_obj["class_name"] == class_name
                 ))
                 if professors:
-                    professor = st.selectbox("교수님", professors, key="professor_select_read")
+                    professor = st.selectbox("선생님", professors, key="professor_select_read")
 
         # 선택된 세부 과목명에 해당하는 리뷰와 평점 출력
         if class_name:
