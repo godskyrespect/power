@@ -68,7 +68,7 @@ def set_background(image_path):
         unsafe_allow_html=True
     )
 
-image_path = "image.jpg"  # 이미지 경로를 변경하세요
+image_path = "image1.jpg"  # 이미지 경로를 변경하세요
 set_background(image_path)
 
 st.write("배경 이미지를 로컬 경로에서 불러왔습니다!")
