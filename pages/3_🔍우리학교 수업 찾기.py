@@ -77,7 +77,25 @@ def show_recommendations(select):
                     {star*ratings}{star_black*(5-ratings)}'''
                     st.write(lists)
 
+# Streamlit 앱 시작
 
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
+if "student_id" not in st.session_state:
+    st.session_state.student_id = ""
+if "name" not in st.session_state:
+    st.session_state.name = ""
+
+# 로그인 상태 확인 후 사이드바에 사용자 정보 표시
+if st.session_state.logged_in:
+    with st.sidebar:
+        st.write(f"{st.session_state.student_id}")
+        st.write(f"{st.session_state.name}")
+        if st.button("로그아웃"):
+            st.session_state.logged_in = False
+            st.session_state.student_id = ""
+            st.session_state.name = ""
+            st.success("로그아웃되었습니다.")
   
 st.info("이 페이지에서는 우리 학교에서 추천하는 수업을 보거나 검색할 수 있어요!", icon="🎅")
 
