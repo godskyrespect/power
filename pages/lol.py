@@ -2,7 +2,7 @@
 import streamlit as st
 import requests
 
-SERVER_HTTP = "http://YOUR_SERVER_IP_OR_DOMAIN"  # ex: http://myserver.com
+SERVER_HTTP = "http://16.176.5.74:8000"  # ex: http://myserver.com
 
 st.title("🚀 Arduino Cloud 업로더")
 
