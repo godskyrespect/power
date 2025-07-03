@@ -18,7 +18,7 @@ void loop() {
 
 port = st.text_input("포트", "/dev/ttyACM0")
 fqbn = st.text_input("보드 FQBN", "arduino:avr:uno")
-agent_id = st.text_input("Agent ID", "agent123")
+agent_id = st.text_input("Agent ID", "ASTDIO-")
 
 if st.button("📤 업로드"):
     res = requests.post(f"{SERVER_HTTP}/upload", json={
