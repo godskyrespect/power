@@ -37,3 +37,21 @@ if st.button("📤 업로드"):
     else:
         st.error("❌ 에이전트 연결 실패 또는 응답 지연")
         st.text(res.text)
+
+if st.button("📤 포트 정보 받기"):
+    res = requests.post(f"{SERVER_HTTP}/upload", json={
+        "agent_id": agent_id,
+        "code": code,
+        "fqbn": fqbn,
+        "port": port
+    })
+  
+    if res.status_code == 200:
+        result = res.json()
+        if result["status"] == "success":
+            st.success(f"✅ 결과 : {result['output']}")
+        else:
+            st.error(f"❌ 확인 실패: {result['output']}")
+    else:
+        st.error("❌ 에이전트 연결 실패 또는 응답 지연")
+        st.text(res.text)
