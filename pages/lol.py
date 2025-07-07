@@ -29,7 +29,7 @@ if st.button("📤 업로드"):
     })
 
     if res.status_code == 200:
-        st.success("✅ 업로드 명령 전송 완료")
+        st.success(f"✅ 업로드 명령 전송 완료({res.text})")
     else:
         st.error("❌ 업로드 실패")
         st.text(res.text)
