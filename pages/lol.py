@@ -29,7 +29,11 @@ if st.button("📤 업로드"):
     })
 
     if res.status_code == 200:
-        st.success(f"✅ 업로드 명령 전송 완료({res.text})")
+        result = res.json()
+        if result["status"] == "success":
+            st.success(f"✅ 업로드 성공: {result['output']}")
+        else:
+            st.error(f"❌ 업로드 실패: {result['output']}")
     else:
-        st.error("❌ 업로드 실패")
+        st.error("❌ 에이전트 연결 실패 또는 응답 지연")
         st.text(res.text)
