@@ -46,7 +46,8 @@ if st.button("📤 아두이노 클라이언트 연결하기"):
                     address = item["port"]["address"]
                     protocol_label = item["port"]["protocol_label"]
                     st.session_state.info = {"Name": name, "fqbn": fqbn, "Port": address, "Type": protocol_label}
-            else st.session_state.info = {"Name": None, "fqbn": None, "Port": None, "Type": None}
+            else:
+              st.session_state.info = {"Name": None, "fqbn": None, "Port": None, "Type": None}
 
         st.json(st.session_state.info)
     else:
