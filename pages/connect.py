@@ -16,24 +16,19 @@ void loop() {
 }
 """, height=200)
 
-port = st.text_input("포트", "/dev/ttyACM0")
-fqbn = st.text_input("보드 FQBN", "arduino:avr:uno")
 agent_id = st.text_input("Agent ID", "ASTDIO-")
 
-if st.button("📤 업로드"):
-    res = requests.post(f"{SERVER_HTTP}/upload", json={
+if st.button("📤 아두이노 클라이언트 연결하기"):
+    res = requests.post(f"{SERVER_HTTP}/connect", json={
         "agent_id": agent_id,
-        "code": code,
-        "fqbn": fqbn,
-        "port": port
     })
 
     if res.status_code == 200:
         result = res.json()
-        if result["status"] == "success":
-            st.success(f"✅ 업로드 성공: {result['output']}")
+        if res:
+            st.success(f"✅ 연결 성공: {result['status']}")
         else:
-            st.error(f"❌ 업로드 실패: {result['output']}")
+            st.error(f"❌ 업로드 실패: {result['error']}")
     else:
         st.error("❌ 에이전트 연결 실패 또는 응답 지연")
         st.text(res.text)
