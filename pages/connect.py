@@ -37,13 +37,13 @@ if st.button("📤 아두이노 클라이언트 연결하기"):
           response = requests.post(f"{SERVER_HTTP}/arduino_info", json={"agent_id": st.session_state.key})
           infos = response.json()['output']
           for item in infos["detected_ports"]:
-          if "matching_boards" in item:
-              for board in item["matching_boards"]:
-                  name = board["name"]
-                  fqbn = board["fqbn"]
-                  address = item["port"]["address"]
-                  protocol_label = item["port"]["protocol_label"]
-                  st.session_state.info = {"Name": name, "fqbn": fqbn, "Port": address, "Type": protocol_label}
+            if "matching_boards" in item:
+                for board in item["matching_boards"]:
+                    name = board["name"]
+                    fqbn = board["fqbn"]
+                    address = item["port"]["address"]
+                    protocol_label = item["port"]["protocol_label"]
+                    st.session_state.info = {"Name": name, "fqbn": fqbn, "Port": address, "Type": protocol_label}
 
         st.json(st.session_state.info)
     else:
