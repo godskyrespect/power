@@ -34,7 +34,7 @@ if st.button("📤 아두이노 클라이언트 연결하기"):
             st.success(f"✅ 연결 성공: {result['status']}")
             st.session_state.key = agent_id
         with st.spinner("아두이노 정보를 가져오는 중입니다..."):
-          response = requests.post(f"{SERVER_HTTP}/arduino_info", json{"agent_id": st.session_state.key})
+          response = requests.post(f"{SERVER_HTTP}/arduino_info", json={"agent_id": st.session_state.key})
           st.session_state.info = response.json()
         st.json(st.session_state.info)
     else:
