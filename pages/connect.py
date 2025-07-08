@@ -35,8 +35,9 @@ if st.button("📤 아두이노 클라이언트 연결하기"):
             st.session_state.key = agent_id
         with st.spinner("아두이노 정보를 가져오는 중입니다..."):
           response = requests.post(f"{SERVER_HTTP}/arduino_info", json={"agent_id": st.session_state.key})
-          infos = response.json()['output']
-          st.markdown(infos)
+          output_str = response.json()['output']
+          infos = json.loads(output_str)
+          st.json(infos)
           for item in infos["detected_ports"]:
             if "matching_boards" in item:
                 for board in item["matching_boards"]:
