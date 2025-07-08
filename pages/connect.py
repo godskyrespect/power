@@ -27,11 +27,8 @@ if st.button("📤 아두이노 클라이언트 연결하기"):
         result = res.json()
         if res:
             st.success(f"✅ 연결 성공: {result['status']}")
-        else:
-            st.error(f"❌ 업로드 실패: {result['error']}")
     else:
-        st.error("❌ 에이전트 연결 실패 또는 응답 지연")
-        st.text(res.text)
+        st.error(f"❌ 연결 실패 : {res.json()['error']}")
 
 if st.button("📤 포트 정보 받기"):
     res = requests.post(f"{SERVER_HTTP}/upload", json={
