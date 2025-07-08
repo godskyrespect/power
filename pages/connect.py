@@ -8,7 +8,7 @@ if "key" not in st.session_state:
   st.session_state.key = ""
 
 if "info" not in st.session_state:
-  st.session_state.info = ""
+  st.session_state.info = []
 st.title("🚀 Arduino Cloud 업로더")
 
 code = st.text_area("코드 입력", """
