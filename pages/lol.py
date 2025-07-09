@@ -57,6 +57,6 @@ if st.button("📤 포트 정보 받기"):
         st.text(res.text)
 
 if st.button("📤 시리얼 통신 실행"):
-    res = requests.post(f"{SERVER_HTTP}/serial_on", json={
+    res = requests.post(f"{SERVER_HTTP}/serial/on", json={
         "agent_id": agent_id,
     })
