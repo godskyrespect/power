@@ -55,3 +55,8 @@ if st.button("📤 포트 정보 받기"):
     else:
         st.error("❌ 에이전트 연결 실패 또는 응답 지연")
         st.text(res.text)
+
+if st.button("📤 시리얼 통신 실행"):
+    res = requests.post(f"{SERVER_HTTP}/serial_on", json={
+        "agent_id": agent_id,
+    })
