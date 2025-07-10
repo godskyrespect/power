@@ -24,4 +24,4 @@ port = st.text_input("포트", "/dev/ttyACM0")
 fqbn = st.text_input("보드 FQBN", "arduino:avr:uno")
 st.session_state.agent_id = st.text_input("Agent ID",placeholder="ASTDIO-")
 
-st.write("현재 통신 AGENT ID : ", agent_id)
+st.write("현재 통신 AGENT ID : ", st.session_state.agent_id)
