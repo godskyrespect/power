@@ -46,8 +46,8 @@ serial_area = st.empty()
 # serial_area.text(st.session_state.serial_data)
 
 st.markdown("""
-**연결/해제/초기화**를 클릭해 USB 시리얼 장치와 통신할 수 있습니다.<br>
-데이터 출력 영역은 브라우저 창 크기에 맞게 자동 확장됩니다.<br>
+**연결 / 해제 / 초기화**로 USB 시리얼 장치와 소통하세요.<br>
+데이터 출력 영역은 창 너비에 맞게, 데이터는 한 줄씩 보기 좋게 표시됩니다.<br>
 (Chrome/Edge/Brave 등 최신 브라우저만 지원)
 """, unsafe_allow_html=True)
 
