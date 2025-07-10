@@ -44,3 +44,44 @@ else:
     get = requests.post(f"{SERVER_HTTP}/serial/off", json={"agent_id": st.session_state.agent_id})  
 
 serial_area.text(st.session_state.serial_data)
+
+st.markdown("""
+아래 버튼을 누르고 포트를 선택하면, 시리얼 데이터가 웹 브라우저 내에서 바로 표시됩니다.  
+(크롬/엣지/브레이브 등 최신 브라우저만 지원)
+""")
+
+serial_html = """
+<button id="connect">시리얼 연결</button>
+<pre id="output" style="background:black; color:lime; height:300px; overflow:auto"></pre>
+<script>
+let port;
+let reader;
+document.getElementById('connect').onclick = async () => {
+  if (!('serial' in navigator)) {
+    alert('이 브라우저는 Web Serial API를 지원하지 않습니다.');
+    return;
+  }
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 9600 });
+    document.getElementById('output').textContent += '[연결됨]\\n';
+    reader = port.readable.getReader();
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) {
+        const text = new TextDecoder().decode(value);
+        document.getElementById('output').textContent += text;
+        document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
+      }
+    }
+  } catch(e) {
+    document.getElementById('output').textContent += '\\n에러: ' + e + '\\n';
+  }
+};
+</script>
+"""
+
+with st.container():
+    st.markdown("### 📡 시리얼 모니터 컨테이너")
+    st.components.v1.html(serial_html, height=350)
