@@ -47,8 +47,8 @@ serial_area = st.empty()
 
 
 st.markdown("""
-**연결/해제/초기화**를 클릭해 USB 시리얼 장치와 통신할 수 있습니다.<br>
-데이터 출력 영역은 브라우저 창 크기에 맞게 자동 확장됩니다.<br>
+**연결/해제/초기화**로 USB 시리얼 장치와 소통하세요.<br>
+데이터 출력 영역은 창 너비에 맞게, 데이터는 한 줄씩 보기 좋게 표시됩니다.<br>
 (Chrome/Edge/Brave 등 최신 브라우저만 지원)
 """, unsafe_allow_html=True)
 
@@ -69,75 +69,88 @@ serial_html = """
   </div>
 </div>
 <script>
-let port;
-let reader;
-let keepReading = false;
+function setupSerialMonitor(){
+  let port;
+  let reader;
+  let keepReading = false;
+  let textBuffer = "";
 
-function setStatus(msg, color="#333") {
-  let st = document.getElementById('status');
-  st.innerHTML = "<b>상태</b>: " + msg;
-  st.style.color = color;
-}
+  function setStatus(msg, color="#333") {
+    let st = document.getElementById('status');
+    st.innerHTML = "<b>상태</b>: " + msg;
+    st.style.color = color;
+  }
 
-async function releasePort() {
-  keepReading = false;
-  if (reader) {
-    try { await reader.cancel(); } catch {}
-    reader = null;
-  }
-  if (port) {
-    try { await port.close(); } catch {}
-    port = null;
-  }
-}
-
-document.getElementById('connect').onclick = async () => {
-  if (!('serial' in navigator)) {
-    setStatus('Web Serial API 미지원 브라우저입니다.', "#d60000");
-    return;
-  }
-  try {
-    port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 9600 });
-    setStatus("연결됨", "#2674ff");
-    document.getElementById('output').innerHTML += '<div style="color:#2674ff;">[연결됨]</div>';
-    keepReading = true;
-    reader = port.readable.getReader();
-    while (keepReading) {
-      const { value, done } = await reader.read();
-      if (done || !keepReading) break;
-      if (value) {
-        const text = new TextDecoder().decode(value);
-        textBuffer = lines.pop();
-        for(let line of lines){
-          if(line.trim() !== "") {
-            let div = document.createElement('div');
-            divtextContent = line;
-            document.getElementById('output).appendChild(div);
-          }
-        }
-        document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
-      }
+  async function releasePort() {
+    keepReading = false;
+    if (reader) {
+      try { await reader.cancel(); } catch {}
+      reader = null;
     }
+    if (port) {
+      try { await port.close(); } catch {}
+      port = null;
+    }
+  }
+
+  document.getElementById('connect').onclick = async () => {
+    if (!('serial' in navigator)) {
+      setStatus('Web Serial API 미지원 브라우저입니다.', "#d60000");
+      return;
+    }
+    try {
+      port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 9600 });
+      setStatus("연결됨", "#2674ff");
+      document.getElementById('output').innerHTML += '<div style="color:#2674ff;">[연결됨]</div>';
+      keepReading = true;
+      reader = port.readable.getReader();
+      let decoder = new TextDecoder();
+      textBuffer = "";
+      while (keepReading) {
+        const { value, done } = await reader.read();
+        if (done || !keepReading) break;
+        if (value) {
+          const text = decoder.decode(value);
+          textBuffer += text;
+          let lines = textBuffer.split(/\\r?\\n/);
+          textBuffer = lines.pop();
+          for(let line of lines){
+            if(line.trim() !== "") {
+              let div = document.createElement('div');
+              div.textContent = line;
+              document.getElementById('output').appendChild(div);
+            }
+          }
+          document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
+        }
+      }
+      await releasePort();
+      setStatus("연결해제됨", "#888");
+    } catch(e) {
+      setStatus("에러: " + e, "#d60000");
+    }
+  };
+
+  document.getElementById('disconnect').onclick = async () => {
     await releasePort();
     setStatus("연결해제됨", "#888");
-  } catch(e) {
-    setStatus("에러: " + e, "#d60000");
-  }
-};
+    document.getElementById('output').innerHTML += '<div style="color:#888;">[연결 해제됨]</div>';
+  };
 
-document.getElementById('disconnect').onclick = async () => {
-  await releasePort();
-  setStatus("연결해제됨", "#888");
-  document.getElementById('output').innerHTML += '<div style="color:#888;">[연결 해제됨]</div>';
-};
+  document.getElementById('reset').onclick = async () => {
+    await releasePort();
+    document.getElementById('output').innerHTML = "";
+    setStatus("초기화됨", "#fa0");
+    document.getElementById('output').innerHTML = '<div style="color:#fa0;">[초기화됨 - 연결을 다시 시도하세요]</div>';
+  };
+}
 
-document.getElementById('reset').onclick = async () => {
-  await releasePort();
-  document.getElementById('output').innerHTML = "";
-  setStatus("초기화됨", "#fa0");
-  document.getElementById('output').innerHTML = '<div style="color:#fa0;">[초기화됨 - 연결을 다시 시도하세요]</div>';
-};
+if(document.readyState === "complete" || document.readyState === "interactive"){
+  setupSerialMonitor();
+} else {
+  document.addEventListener("DOMContentLoaded", setupSerialMonitor);
+}
 </script>
 """
 
