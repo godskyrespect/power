@@ -108,9 +108,14 @@ document.getElementById('connect').onclick = async () => {
       if (done || !keepReading) break;
       if (value) {
         const text = new TextDecoder().decode(value);
-        let div = document.createElement('div');
-        div.textContent = text;
-        document.getElementById('output').appendChild(div);
+        textBuffer = lines.pop();
+        for(let line of lines){
+          if(line.trim() !== "") {
+            let div = document.createElement('div');
+            divtextContent = line;
+            document.getElementById('output).appendChild(div);
+          }
+        }
         document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
       }
     }
