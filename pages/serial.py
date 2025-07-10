@@ -13,8 +13,8 @@ if "agent_id" not in st.session_state:
 port = st.text_input("포트", "/dev/ttyACM0")
 fqbn = st.text_input("보드 FQBN", "arduino:avr:uno")
 st.session_state.agent_id = st.text_input("Agent ID",placeholder="ASTDIO-")
-serial_on = st.togle("시리얼 통신 영역 전개")
-if on:
+serial_on = st.toggle("시리얼 통신 영역 전개")
+if serial_on:
   st.write("시리얼 통신 시작")
 st.write("현재 통신 AGENT ID : ", st.session_state.agent_id)
 st.divider()
