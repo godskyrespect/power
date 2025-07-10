@@ -19,6 +19,7 @@ st.write("현재 통신 AGENT ID : ", st.session_state.agent_id)
 st.divider()
 
 serial_area = st.empty()
+serial_area.text('\n'.join(st.session_state.serial_data))
 
 if serial_on:
   st.write("시리얼 통신 시작")
@@ -32,7 +33,7 @@ if serial_on:
               if res.status_code == 200:
                   data = res.json()["serial_data"]
                   if data:
-                      serial_area.text('\n'.join(data))
+                      st.session_state.serial_data.append(data)
               time.sleep(1)
           except Exception as e:
               st.error(f"에러: {e}")
