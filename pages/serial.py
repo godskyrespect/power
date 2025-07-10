@@ -46,21 +46,26 @@ serial_area = st.empty()
 # serial_area.text(st.session_state.serial_data)
 
 st.markdown("""
-아래에서 **시리얼 연결/해제**를 클릭해 USB 시리얼 장치와 연결하세요.<br>
-실시간 수신 데이터가 아래 박스에 표시됩니다.<br>
+**연결/해제/초기화**를 클릭해 USB 시리얼 장치와 통신할 수 있습니다.<br>
+데이터 출력 영역은 브라우저 창 크기에 맞게 자동 확장됩니다.<br>
 (Chrome/Edge/Brave 등 최신 브라우저만 지원)
 """, unsafe_allow_html=True)
 
 serial_html = """
-<div style="max-width:430px; margin:0 auto;">
-  <div id="status" style="padding:8px 12px; border-radius:8px; border:1px solid #ccc; background:#f5f5f5; margin-bottom:10px; color:#333;">
+<div style="width:100%; max-width:1000px; margin:0 auto;">
+  <div id="status" style="padding:8px 12px; border-radius:8px; border:1px solid #ccc; background:#f5f5f5; margin-bottom:12px; color:#333;">
     <b>상태</b>: 연결되지 않음
   </div>
-  <div style="display:flex; gap:10px; margin-bottom:10px;">
-    <button id="connect" style="padding:8px 20px; border-radius:6px; border:none; background:#2674ff; color:#fff; font-weight:bold;">연결</button>
-    <button id="disconnect" style="padding:8px 20px; border-radius:6px; border:none; background:#ccc; color:#444; font-weight:bold;">해제</button>
+  <div style="display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+    <button id="connect" style="padding:8px 22px; border-radius:6px; border:none; background:#2674ff; color:#fff; font-weight:bold;">연결</button>
+    <button id="disconnect" style="padding:8px 22px; border-radius:6px; border:none; background:#ccc; color:#444; font-weight:bold;">해제</button>
+    <button id="reset" style="padding:8px 22px; border-radius:6px; border:none; background:#fa0; color:#222; font-weight:bold;">초기화</button>
   </div>
-  <div style="border:1.5px solid #2674ff; border-radius:10px; background:rgba(230,240,255,0.8); min-height:220px; max-height:300px; overflow-y:auto; font-family:monospace; font-size:1.05em; color:#19355a; padding:10px;" id="output"></div>
+  <div id="output"
+    style="border:1.5px solid #2674ff; border-radius:10px; background:rgba(230,240,255,0.9);
+    min-height:220px; max-height:40vh; overflow-y:auto; font-family:monospace;
+    font-size:1.08em; color:#19355a; padding:12px; width:100%; box-sizing:border-box;">
+  </div>
 </div>
 <script>
 let port;
@@ -73,7 +78,18 @@ function setStatus(msg, color="#333") {
   st.style.color = color;
 }
 
-// 연결 버튼
+async function releasePort() {
+  keepReading = false;
+  if (reader) {
+    try { await reader.cancel(); } catch {}
+    reader = null;
+  }
+  if (port) {
+    try { await port.close(); } catch {}
+    port = null;
+  }
+}
+
 document.getElementById('connect').onclick = async () => {
   if (!('serial' in navigator)) {
     setStatus('Web Serial API 미지원 브라우저입니다.', "#d60000");
@@ -97,29 +113,27 @@ document.getElementById('connect').onclick = async () => {
         document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
       }
     }
-    reader.releaseLock();
+    await releasePort();
     setStatus("연결해제됨", "#888");
   } catch(e) {
     setStatus("에러: " + e, "#d60000");
   }
 };
 
-// 해제 버튼
 document.getElementById('disconnect').onclick = async () => {
-  keepReading = false;
-  if (reader) {
-    try { await reader.cancel(); } catch {}
-    reader = null;
-  }
-  if (port) {
-    try { await port.close(); } catch {}
-    port = null;
-  }
+  await releasePort();
   setStatus("연결해제됨", "#888");
   document.getElementById('output').innerHTML += '<div style="color:#888;">[연결 해제됨]</div>';
+};
+
+document.getElementById('reset').onclick = async () => {
+  await releasePort();
+  document.getElementById('output').innerHTML = "";
+  setStatus("초기화됨", "#fa0");
+  document.getElementById('output').innerHTML = '<div style="color:#fa0;">[초기화됨 - 연결을 다시 시도하세요]</div>';
 };
 </script>
 """
 
 with st.container():
-    st.components.v1.html(serial_html, height=400)
+    st.components.v1.html(serial_html, height=420)
