@@ -21,29 +21,29 @@ st.divider()
 serial_area = st.empty()
 
 
-if serial_on:
-  st.write("시리얼 통신 시작")
-  if not st.session_state.agent_id:
-    st.warning("Client와 연결되어 있지 않음.")
-  else:
-      send = requests.post(f"{SERVER_HTTP}/serial/on", json={"agent_id": st.session_state.agent_id})
-      while True:
-          try:
-              res = requests.get(f"{SERVER_HTTP}/serial", params={"agent_id": st.session_state.agent_id})
-              if res.status_code == 200:
-                  data = res.json()["serial_data"]
-                  if data:
-                      serial_area.text(st.session_state.serial_data.append(data))
-              time.sleep(1)
-          except Exception as e:
-              st.error(f"에러: {e}")
-              time.sleep(5)
-              break
-else:
-  if st.session_state.agent_id:
-    get = requests.post(f"{SERVER_HTTP}/serial/off", json={"agent_id": st.session_state.agent_id})  
+# if serial_on:
+#   st.write("시리얼 통신 시작")
+#   if not st.session_state.agent_id:
+#     st.warning("Client와 연결되어 있지 않음.")
+#   else:
+#       send = requests.post(f"{SERVER_HTTP}/serial/on", json={"agent_id": st.session_state.agent_id})
+#       while True:
+#           try:
+#               res = requests.get(f"{SERVER_HTTP}/serial", params={"agent_id": st.session_state.agent_id})
+#               if res.status_code == 200:
+#                   data = res.json()["serial_data"]
+#                   if data:
+#                       serial_area.text(st.session_state.serial_data.append(data))
+#               time.sleep(1)
+#           except Exception as e:
+#               st.error(f"에러: {e}")
+#               time.sleep(5)
+#               break
+# else:
+#   if st.session_state.agent_id:
+#     get = requests.post(f"{SERVER_HTTP}/serial/off", json={"agent_id": st.session_state.agent_id})  
 
-serial_area.text(st.session_state.serial_data)
+# serial_area.text(st.session_state.serial_data)
 
 st.markdown("""
 아래 버튼을 누르고 포트를 선택하면, 시리얼 데이터가 웹 브라우저 내에서 바로 표시됩니다.  
