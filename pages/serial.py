@@ -39,4 +39,6 @@ if serial_on:
               time.sleep(5)
               
               break
-      get = requests.post(f"{SERVER_HTTP}/serial/off", json={"agent_id": st.session_state.agent_id})
+else:
+  if st.session_state.agent_id:
+    get = requests.post(f"{SERVER_HTTP}/serial/off", json={"agent_id": st.session_state.agent_id})  
