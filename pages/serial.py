@@ -27,7 +27,7 @@ if serial_on:
   else:
       while True:
           try:
-              res = requests.get(f"http://{SERVER_HTTP}/get_serial", params={"agent_id": st.session_state.agent_id})
+              res = requests.get(f"{SERVER_HTTP}/get_serial", params={"agent_id": st.session_state.agent_id})
               if res.status_code == 200:
                   data = res.json()["serial_data"]
                   if data:
