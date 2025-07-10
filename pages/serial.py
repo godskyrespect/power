@@ -25,6 +25,7 @@ if serial_on:
   if not st.session_state.agent_id:
     st.warning("Client와 연결되어 있지 않음.")
   else:
+      send = requests.get(f"{SERVER_HTTP}/serial/on", requests)
       while True:
           try:
               res = requests.get(f"{SERVER_HTTP}/serial", params={"agent_id": st.session_state.agent_id})
