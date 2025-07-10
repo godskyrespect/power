@@ -71,6 +71,7 @@ serial_html = """
 let port;
 let reader;
 let keepReading = false;
+let textBuffer = "";
 
 function setStatus(msg, color="#333") {
   let st = document.getElementById('status');
@@ -102,14 +103,25 @@ document.getElementById('connect').onclick = async () => {
     document.getElementById('output').innerHTML += '<div style="color:#2674ff;">[연결됨]</div>';
     keepReading = true;
     reader = port.readable.getReader();
+    let decoder = new TextDecoder();
+    textBuffer = "";
     while (keepReading) {
       const { value, done } = await reader.read();
       if (done || !keepReading) break;
       if (value) {
-        const text = new TextDecoder().decode(value);
-        let div = document.createElement('div');
-        div.textContent = text;
-        document.getElementById('output').appendChild(div);
+        const text = decoder.decode(value);
+        textBuffer += text;
+        // 엔터(\n)로 줄단위 분리
+        let lines = textBuffer.split(/\\r?\\n/);
+        // 마지막은 아직 줄끝 아님. 임시 보류.
+        textBuffer = lines.pop();
+        for(let line of lines){
+          if(line.trim() !== "") {
+            let div = document.createElement('div');
+            div.textContent = line;
+            document.getElementById('output').appendChild(div);
+          }
+        }
         document.getElementById('output').scrollTop = document.getElementById('output').scrollHeight;
       }
     }
