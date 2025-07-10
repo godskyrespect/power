@@ -1,6 +1,6 @@
 # ui.py
 import streamlit as st
-import requests
+import requests, time
 
 SERVER_HTTP = "http://16.176.5.74:8000"  # ex: http://myserver.com
 if "serial_data" not in st.session_state:
